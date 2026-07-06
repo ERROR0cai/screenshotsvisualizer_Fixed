@@ -6,6 +6,10 @@ Module: ScreenshotsVisualizer.dll
 Type: GenericPlugin
 Icon: icon.png
 Links:
+  - Name: Wiki - User Guide
+    Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin/wiki/User-guide
+  - Name: Wiki - Theme Modders Guide
+    Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin/wiki/Theme-modders-guide
   - Name: Github
     Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin
   - Name: Issues Tracker

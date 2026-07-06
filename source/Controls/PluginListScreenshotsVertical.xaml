@@ -7,10 +7,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:commonpluginsshared="clr-namespace:CommonPluginsShared"
         xmlns:local="clr-namespace:ScreenshotsVisualizer.Controls"
-        mc:Ignorable="d" d:DesignHeight="100" d:DesignWidth="100"
-        MinHeight="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MinHeight}"
-        Height="{Binding IntegrationShowPicturesHeight}"
-        MaxHeight="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MaxHeight}">
+        mc:Ignorable="d" d:DesignHeight="220" d:DesignWidth="300"
+        d:DataContext="{d:DesignInstance Type=local:PluginListScreenshotsVerticalDataContext, IsDesignTimeCreatable=True}"
+        MinHeight="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MinHeight, FallbackValue=120}"
+        Height="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Height, FallbackValue=220}"
+        MaxHeight="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MaxHeight, FallbackValue=400}"
+        MinWidth="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MinWidth, FallbackValue=220}"
+        Width="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=Width, FallbackValue=220}"
+        MaxWidth="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MaxWidth}">
 
     <controls:PluginUserControlExtend.Resources>
         <ResourceDictionary>
@@ -18,10 +22,8 @@
                 <ResourceDictionary Source="../Views/Templates/SsvScreenshotsGalleryResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-        <local:TwoSizeMultiValueConverter x:Key="TwoSizeMultiValueConverter" />
-
         <DataTemplate x:Key="ItemTemplate">
-            <Grid Margin="5" Name="PART_Contener" Height="150" Width="200">
+            <Grid Margin="5" Name="PART_Contener" Height="150" HorizontalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
@@ -39,13 +41,8 @@
                 <local:SsvThumbnailImage Grid.Row="0"
                                          x:Name="PART_ScreenshotsPicture"
                                          Style="{StaticResource SsvThumbnailImageGalleryStyle}"
+                                         MaxHeight="120"
                                          Tag="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Mode=OneWay, Converter={StaticResource IndexConverter}}">
-                    <local:SsvThumbnailImage.MaxHeight>
-                        <MultiBinding Converter="{StaticResource TwoSizeMultiValueConverter}" ConverterParameter="-">
-                            <Binding ElementName="PART_GridContenerListGame" Path="ActualHeight" />
-                            <Binding ElementName="PART_LabelContener" Path="ActualHeight" />
-                        </MultiBinding>
-                    </local:SsvThumbnailImage.MaxHeight>
                 </local:SsvThumbnailImage>
 
                 <TextBlock Grid.Row="0"
@@ -75,6 +72,8 @@
                  ItemsSource="{Binding ItemsSource}"
                  ItemTemplate="{StaticResource ItemTemplate}"     
                  Tag="{Binding AddBorder}"
+                 ClipToBounds="True"
+                 HorizontalContentAlignment="Stretch"
                  Height="{Binding ElementName=PART_GridContenerListGame, Path=ActualHeight}" 
                  Width="{Binding ElementName=PART_GridContenerListGame, Path=ActualWidth}">
         </ListBox>

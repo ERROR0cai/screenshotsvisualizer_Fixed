@@ -14,6 +14,10 @@
         <wpftk:VirtualizingWrapPanel Orientation="Vertical" />
     </ItemsPanelTemplate>
 
+    <ItemsPanelTemplate x:Key="SsvStackPanelVerticalTemplate">
+        <VirtualizingStackPanel Orientation="Vertical" />
+    </ItemsPanelTemplate>
+
     <Style x:Key="SsvScreenshotsListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -38,7 +42,9 @@
     <Style x:Key="SsvScreenshotsListBoxVerticalStyle"
            TargetType="{x:Type ListBox}"
            BasedOn="{StaticResource SsvScreenshotsListBoxStyle}">
-        <Setter Property="ItemsPanel" Value="{StaticResource SsvWrapPanelVerticalTemplate}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ItemsPanel" Value="{StaticResource SsvStackPanelVerticalTemplate}" />
     </Style>
 
 </ResourceDictionary>

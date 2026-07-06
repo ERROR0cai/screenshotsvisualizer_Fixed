@@ -50,6 +50,26 @@ namespace ScreenshotsVisualizer.Views.Settings
             }
         }
 
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!(DataContext is ViewModel viewModel))
+            {
+                return;
+            }
+
+            string searchText = string.Empty;
+            if (sender != null)
+            {
+                var textProperty = sender.GetType().GetProperty("Text");
+                searchText = textProperty?.GetValue(sender)?.ToString() ?? string.Empty;
+            }
+
+            if (!string.Equals(viewModel.SearchText, searchText, StringComparison.Ordinal))
+            {
+                viewModel.SearchText = searchText;
+            }
+        }
+
         private void ConfirmSelection()
         {
             if (!(DataContext is ViewModel viewModel) || viewModel.SelectedGame == null)

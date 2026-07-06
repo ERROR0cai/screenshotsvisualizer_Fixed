@@ -27,8 +27,10 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <playnitecontrols:SearchBox Grid.Row="0"
-                                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+        <playnitecontrols:SearchBox x:Name="SearchBox"
+                                    Grid.Row="0"
+                                    Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    TextChanged="SearchBox_TextChanged" />
 
         <Grid Grid.Row="2">
             <TextBlock Style="{DynamicResource BaseTextBlockStyle}"

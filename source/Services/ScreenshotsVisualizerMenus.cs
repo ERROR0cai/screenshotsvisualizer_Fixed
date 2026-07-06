@@ -20,7 +20,6 @@ namespace ScreenshotsVisualizer.Services
     /// </summary>
     public class ScreenshotsVisualizerMenus : PluginMenus
     {
-        private static readonly ILogger Logger = LogManager.GetLogger();
         private readonly ScreenshotsVisualizer _plugin;
         private ScreenshotsVisualizerDatabase Database => (ScreenshotsVisualizerDatabase)_database;
 

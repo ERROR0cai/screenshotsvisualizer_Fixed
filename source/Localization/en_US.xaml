@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:String x:Key="LOCSsvScreenshot">{0} screenshot</sys:String>
@@ -63,6 +63,16 @@
     <sys:String x:Key="LOCSsvImageConversionUnnamed">Unnamed command</sys:String>
     
     <sys:String x:Key="LOCSsvMovingToSave">Moving screenshots...</sys:String>
+    <sys:String x:Key="LOCSsvCsvImageCount">Image count</sys:String>
+    <sys:String x:Key="LOCSsvCsvImageTotalSizeBytes">Image total size (bytes)</sys:String>
+    <sys:String x:Key="LOCSsvCsvImageTotalSize">Image total size</sys:String>
+    <sys:String x:Key="LOCSsvCsvVideoCount">Video count</sys:String>
+    <sys:String x:Key="LOCSsvCsvVideoTotalSizeBytes">Video total size (bytes)</sys:String>
+    <sys:String x:Key="LOCSsvCsvVideoTotalSize">Video total size</sys:String>
+    <sys:String x:Key="LOCSsvCsvVideoTotalDuration">Video total duration</sys:String>
+    <sys:String x:Key="LOCSsvCsvTotalCount">Total count</sys:String>
+    <sys:String x:Key="LOCSsvCsvTotalSizeBytes">Total size (bytes)</sys:String>
+    <sys:String x:Key="LOCSsvCsvTotalSize">Total size</sys:String>
 
     <sys:String x:Key="LOCSsvWarningToMove">Are you sure you want to move all of the screenshots?</sys:String>
 
@@ -95,11 +105,15 @@
 
     <!-- ScreenshotsVisualizerSettingsView -->
 
+    <sys:String x:Key="LOCSsvUseExternalViever">Use an external viewer</sys:String>
+    
     <sys:String x:Key="LOCSsvFfmpegPathLabel">ffmpeg path:</sys:String>
     <sys:String x:Key="LOCSsvFfprobePathLabel">ffprobe path:</sys:String>
     <sys:String x:Key="LOCSsvDownloadFfmpegLabel">Download ffmpeg package</sys:String>
 
-    <sys:String x:Key="LOCSsvUsedThumbnails">Generate thumbnails to improve loading performance</sys:String>
+    <sys:String x:Key="LOCSsvThumbnailCacheDescription">Thumbnail images generated to speed up gallery loading.</sys:String>
+    <sys:String x:Key="LOCSsvThumbnailCacheItemCountLabel">Cached items:</sys:String>
+    <sys:String x:Key="LOCSsvThumbnailCacheSizeLabel">Total size:</sys:String>
 
     <sys:String x:Key="LOCSsvGlobalPath">Global screenshots path</sys:String>
 
@@ -194,30 +208,15 @@ Archive destination:
 
     <sys:String x:Key="LOCSsvMoveToFolderToSaveError">Settings to use to move the screenshots is missing</sys:String>
 
-    <sys:String x:Key="LOCSsvConfigSectionGlobalPaths">Global paths</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionQuickAdd">Quick add</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionManualAdd">Add a game manually</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionConfiguredGames">Configured games</sys:String>
-    <sys:String x:Key="LOCSsvConfigContextGlobals">Globals</sys:String>
+    <!-- Settings — Configuration tab (phase 1.5 master-detail) -->
+
+    <!-- Layout sections -->
     <sys:String x:Key="LOCSsvConfigSectionContexts">Contexts</sys:String>
     <sys:String x:Key="LOCSsvConfigSectionSources">Sources</sys:String>
     <sys:String x:Key="LOCSsvConfigSectionSourcesFor">Sources — {0}</sys:String>
-    <sys:String x:Key="LOCSsvConfigAddGameTitle">Add a game</sys:String>
-    <sys:String x:Key="LOCSsvConfigSelectGameTitle">Select a game to configure</sys:String>
-    <sys:String x:Key="LOCSsvConfigNoUnconfiguredGames">All library games are already configured.</sys:String>
-    <sys:String x:Key="LOCSsvConfigSourcePath">Screenshot folder</sys:String>
-    <sys:String x:Key="LOCSsvSourceListFilePatternPrefix">File pattern: {0}</sys:String>
-    <sys:String x:Key="LOCSsvSourceListSourcesWhitelist">Sources: {0}</sys:String>
-    <sys:String x:Key="LOCSsvSourceListSourcesBlacklist">Excluded sources: {0}</sys:String>
-    <sys:String x:Key="LOCSsvConfigAddSourceTitle">Add screenshot source</sys:String>
-    <sys:String x:Key="LOCSsvConfigEditSourceTitle">Edit screenshot source</sys:String>
-    <sys:String x:Key="LOCSsvConfigSaveSource">Save</sys:String>
-    <sys:String x:Key="LOCSsvConfigAddSource">Add a source</sys:String>
-    <sys:String x:Key="LOCSsvConfigEditSource">Edit</sys:String>
-    <sys:String x:Key="LOCSsvConfigSourcePathRequired">A screenshot folder path is required.</sys:String>
-    <sys:String x:Key="LOCSsvConfigTestConfigComingSoon">Configuration test will be available in a future update.</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionQuickAdd">Quick add</sys:String>
     <sys:String x:Key="LOCSsvConfigSectionArchiving">Archiving</sys:String>
-    <sys:String x:Key="LOCSsvArchivingIntro">Configure how screenshots are moved into a single archive folder from the game menu. These settings apply to all games automatically—the archive folder is included when scanning, including games without per-game configuration.</sys:String>
+    <sys:String x:Key="LOCSsvArchivingIntro">Configure how screenshots are moved into a single archive folder from the game menu. These settings apply to all games automatically—the archive folder is included when scanning, including games without per-game configuration. Use {Name} in the path for a per-game subfolder.</sys:String>
     <sys:String x:Key="LOCSsvArchivingDestinationFolder">Archive destination folder</sys:String>
     <sys:String x:Key="LOCSsvArchiveMigrationTitle">Archive settings migration</sys:String>
     <sys:String x:Key="LOCSsvArchiveMigrationCreatingBackup">Creating settings backup...</sys:String>
@@ -236,14 +235,40 @@ Archive destination:
     <sys:String x:Key="LOCSsvFilePatternInsertVariable">Insert variable</sys:String>
     <sys:String x:Key="LOCSsvFilePatternAvailableVariables">Available variables: {Name}, {DateModified}, {DateTimeModified}, {digit}</sys:String>
     <sys:String x:Key="LOCSsvFolderToSaveInsertVariable">Insert path variable</sys:String>
+    <sys:String x:Key="LOCSsvConfigContextGlobals">Globals</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionConfiguredGames">Configured games</sys:String>
+    <sys:String x:Key="LOCSsvConfigConfiguredGamesCount">{0} game(s)</sys:String>
     <sys:String x:Key="LOCSsvConfigNoActiveSources">No screenshot sources configured for this context.</sys:String>
     <sys:String x:Key="LOCSsvConfigOverrideGlobalConfigs">Override global sources for this game</sys:String>
-    <sys:String x:Key="LOCSsvConfigConfiguredGamesCount">{0} game(s)</sys:String>
+
+    <!-- Legacy phase 1 (kept for Crowdin compatibility) -->
+    <sys:String x:Key="LOCSsvConfigSectionGlobalPaths">Global paths</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionManualAdd">Add a game manually</sys:String>
     <sys:String x:Key="LOCSsvConfigNoGamesConfigured">No games configured. Use Add a game or a quick-add preset in Globals.</sys:String>
+
+    <!-- Game selection dialog -->
+    <sys:String x:Key="LOCSsvConfigAddGameTitle">Add a game</sys:String>
+    <sys:String x:Key="LOCSsvConfigSelectGameTitle">Select a game to configure</sys:String>
+    <sys:String x:Key="LOCSsvConfigNoUnconfiguredGames">All library games are already configured.</sys:String>
+
+    <!-- Source editor dialog -->
+    <sys:String x:Key="LOCSsvConfigSourcePath">Screenshot folder</sys:String>
+    <sys:String x:Key="LOCSsvSourceListFilePatternPrefix">File pattern: {0}</sys:String>
+    <sys:String x:Key="LOCSsvSourceListSourcesWhitelist">Sources: {0}</sys:String>
+    <sys:String x:Key="LOCSsvSourceListSourcesBlacklist">Excluded sources: {0}</sys:String>
+    <sys:String x:Key="LOCSsvConfigAddSourceTitle">Add screenshot source</sys:String>
+    <sys:String x:Key="LOCSsvConfigEditSourceTitle">Edit screenshot source</sys:String>
+    <sys:String x:Key="LOCSsvConfigSaveSource">Save</sys:String>
+    <sys:String x:Key="LOCSsvConfigAddSource">Add a source</sys:String>
+    <sys:String x:Key="LOCSsvConfigEditSource">Edit</sys:String>
+    <sys:String x:Key="LOCSsvConfigSourcePathRequired">A screenshot folder path is required.</sys:String>
+
+    <!-- Phase 2 placeholders -->
     <sys:String x:Key="LOCSsvConfigPreview">Preview</sys:String>
     <sys:String x:Key="LOCSsvConfigNameFormat">Name format</sys:String>
     <sys:String x:Key="LOCSsvConfigPreviewComingSoon">Available in a future update.</sys:String>
     <sys:String x:Key="LOCSsvConfigNameFormatComingSoon">Available in a future update.</sys:String>
+    <sys:String x:Key="LOCSsvConfigTestConfigComingSoon">Configuration test will be available in a future update.</sys:String>
     <sys:String x:Key="LOCSsvConfigTestGame">Test game</sys:String>
     <sys:String x:Key="LOCSsvConfigResolvedPathExists">Resolved folder exists.</sys:String>
     <sys:String x:Key="LOCSsvConfigResolvedPathMissing">Resolved folder does not exist.</sys:String>

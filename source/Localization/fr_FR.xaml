@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:String x:Key="LOCSsvScreenshot">{0} capture d'écran</sys:String>
@@ -63,6 +63,16 @@
     <sys:String x:Key="LOCSsvImageConversionUnnamed">Commande sans nom</sys:String>
     
     <sys:String x:Key="LOCSsvMovingToSave">Déplacement des captures d'écran...</sys:String>
+    <sys:String x:Key="LOCSsvCsvImageCount">Image count</sys:String>
+    <sys:String x:Key="LOCSsvCsvImageTotalSizeBytes">Image total size (bytes)</sys:String>
+    <sys:String x:Key="LOCSsvCsvImageTotalSize">Image total size</sys:String>
+    <sys:String x:Key="LOCSsvCsvVideoCount">Video count</sys:String>
+    <sys:String x:Key="LOCSsvCsvVideoTotalSizeBytes">Video total size (bytes)</sys:String>
+    <sys:String x:Key="LOCSsvCsvVideoTotalSize">Video total size</sys:String>
+    <sys:String x:Key="LOCSsvCsvVideoTotalDuration">Video total duration</sys:String>
+    <sys:String x:Key="LOCSsvCsvTotalCount">Total count</sys:String>
+    <sys:String x:Key="LOCSsvCsvTotalSizeBytes">Total size (bytes)</sys:String>
+    <sys:String x:Key="LOCSsvCsvTotalSize">Total size</sys:String>
 
     <sys:String x:Key="LOCSsvWarningToMove">Voulez-vous vraiment déplacer toutes les captures d'écran ?</sys:String>
 
@@ -95,11 +105,15 @@
 
     <!-- ScreenshotsVisualizerSettingsView -->
 
+    <sys:String x:Key="LOCSsvUseExternalViever">Utiliser un visualiseur externe</sys:String>
+    
     <sys:String x:Key="LOCSsvFfmpegPathLabel">Chemin ffmpeg :</sys:String>
     <sys:String x:Key="LOCSsvFfprobePathLabel">Chemin ffprobe :</sys:String>
     <sys:String x:Key="LOCSsvDownloadFfmpegLabel">Télécharger le paquet ffmpeg</sys:String>
 
-    <sys:String x:Key="LOCSsvUsedThumbnails">Générer des miniatures pour améliorer les performances</sys:String>
+    <sys:String x:Key="LOCSsvThumbnailCacheDescription">Thumbnail images generated to speed up gallery loading.</sys:String>
+    <sys:String x:Key="LOCSsvThumbnailCacheItemCountLabel">Cached items:</sys:String>
+    <sys:String x:Key="LOCSsvThumbnailCacheSizeLabel">Total size:</sys:String>
 
     <sys:String x:Key="LOCSsvGlobalPath">Chemin global des captures d'écran</sys:String>
 
@@ -194,28 +208,13 @@ Destination d'archivage :
 
     <sys:String x:Key="LOCSsvMoveToFolderToSaveError">Il manque des paramètres pour déplacer les captures d'écran</sys:String>
 
-    <sys:String x:Key="LOCSsvConfigSectionGlobalPaths">Chemins globaux</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionQuickAdd">Ajout rapide</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionManualAdd">Ajouter un jeu manuellement</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionConfiguredGames">Jeux configurés</sys:String>
-    <sys:String x:Key="LOCSsvConfigContextGlobals">Globaux</sys:String>
+    <!-- Settings — Configuration tab (phase 1.5 master-detail) -->
+
+    <!-- Layout sections -->
     <sys:String x:Key="LOCSsvConfigSectionContexts">Contextes</sys:String>
     <sys:String x:Key="LOCSsvConfigSectionSources">Sources</sys:String>
     <sys:String x:Key="LOCSsvConfigSectionSourcesFor">Sources — {0}</sys:String>
-    <sys:String x:Key="LOCSsvConfigAddGameTitle">Ajouter un jeu</sys:String>
-    <sys:String x:Key="LOCSsvConfigSelectGameTitle">Sélectionner un jeu à configurer</sys:String>
-    <sys:String x:Key="LOCSsvConfigNoUnconfiguredGames">Tous les jeux de la bibliothèque sont déjà configurés.</sys:String>
-    <sys:String x:Key="LOCSsvConfigSourcePath">Dossier de captures</sys:String>
-    <sys:String x:Key="LOCSsvSourceListFilePatternPrefix">Modèle de fichier : {0}</sys:String>
-    <sys:String x:Key="LOCSsvSourceListSourcesWhitelist">Sources : {0}</sys:String>
-    <sys:String x:Key="LOCSsvSourceListSourcesBlacklist">Sources exclues : {0}</sys:String>
-    <sys:String x:Key="LOCSsvConfigAddSourceTitle">Ajouter une source</sys:String>
-    <sys:String x:Key="LOCSsvConfigEditSourceTitle">Modifier une source</sys:String>
-    <sys:String x:Key="LOCSsvConfigSaveSource">Enregistrer</sys:String>
-    <sys:String x:Key="LOCSsvConfigAddSource">Ajouter une source</sys:String>
-    <sys:String x:Key="LOCSsvConfigEditSource">Modifier</sys:String>
-    <sys:String x:Key="LOCSsvConfigSourcePathRequired">Le chemin du dossier de captures est obligatoire.</sys:String>
-    <sys:String x:Key="LOCSsvConfigTestConfigComingSoon">Le test de configuration sera disponible dans une prochaine mise à jour.</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionQuickAdd">Ajout rapide</sys:String>
     <sys:String x:Key="LOCSsvConfigSectionArchiving">Archivage</sys:String>
     <sys:String x:Key="LOCSsvArchivingIntro">Configure la façon dont les captures sont déplacées vers un dossier d'archivage unique depuis le menu du jeu. Ces paramètres s'appliquent automatiquement à tous les jeux : le dossier d'archivage est pris en compte lors du scan, y compris pour les jeux sans configuration dédiée.</sys:String>
     <sys:String x:Key="LOCSsvArchivingDestinationFolder">Dossier de destination de l'archivage</sys:String>
@@ -236,14 +235,40 @@ Destination d'archivage :
     <sys:String x:Key="LOCSsvFilePatternInsertVariable">Insérer une variable</sys:String>
     <sys:String x:Key="LOCSsvFilePatternAvailableVariables">Variables disponibles : {Name}, {DateModified}, {DateTimeModified}, {digit}</sys:String>
     <sys:String x:Key="LOCSsvFolderToSaveInsertVariable">Insérer une variable de chemin</sys:String>
+    <sys:String x:Key="LOCSsvConfigContextGlobals">Globaux</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionConfiguredGames">Jeux configurés</sys:String>
+    <sys:String x:Key="LOCSsvConfigConfiguredGamesCount">{0} jeu(x)</sys:String>
     <sys:String x:Key="LOCSsvConfigNoActiveSources">Aucune source de captures configurée pour ce contexte.</sys:String>
     <sys:String x:Key="LOCSsvConfigOverrideGlobalConfigs">Remplacer les sources globales pour ce jeu</sys:String>
-    <sys:String x:Key="LOCSsvConfigConfiguredGamesCount">{0} jeu(x)</sys:String>
+
+    <!-- Legacy phase 1 (kept for Crowdin compatibility) -->
+    <sys:String x:Key="LOCSsvConfigSectionGlobalPaths">Chemins globaux</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionManualAdd">Ajouter un jeu manuellement</sys:String>
     <sys:String x:Key="LOCSsvConfigNoGamesConfigured">Aucun jeu configuré. Utilisez Ajouter un jeu ou un preset d'ajout rapide dans Globaux.</sys:String>
+
+    <!-- Game selection dialog -->
+    <sys:String x:Key="LOCSsvConfigAddGameTitle">Ajouter un jeu</sys:String>
+    <sys:String x:Key="LOCSsvConfigSelectGameTitle">Sélectionner un jeu à configurer</sys:String>
+    <sys:String x:Key="LOCSsvConfigNoUnconfiguredGames">Tous les jeux de la bibliothèque sont déjà configurés.</sys:String>
+
+    <!-- Source editor dialog -->
+    <sys:String x:Key="LOCSsvConfigSourcePath">Dossier de captures</sys:String>
+    <sys:String x:Key="LOCSsvSourceListFilePatternPrefix">Modèle de fichier : {0}</sys:String>
+    <sys:String x:Key="LOCSsvSourceListSourcesWhitelist">Sources : {0}</sys:String>
+    <sys:String x:Key="LOCSsvSourceListSourcesBlacklist">Sources exclues : {0}</sys:String>
+    <sys:String x:Key="LOCSsvConfigAddSourceTitle">Ajouter une source</sys:String>
+    <sys:String x:Key="LOCSsvConfigEditSourceTitle">Modifier une source</sys:String>
+    <sys:String x:Key="LOCSsvConfigSaveSource">Enregistrer</sys:String>
+    <sys:String x:Key="LOCSsvConfigAddSource">Ajouter une source</sys:String>
+    <sys:String x:Key="LOCSsvConfigEditSource">Modifier</sys:String>
+    <sys:String x:Key="LOCSsvConfigSourcePathRequired">Le chemin du dossier de captures est obligatoire.</sys:String>
+
+    <!-- Phase 2 placeholders -->
     <sys:String x:Key="LOCSsvConfigPreview">Aperçu</sys:String>
     <sys:String x:Key="LOCSsvConfigNameFormat">Format du nom</sys:String>
     <sys:String x:Key="LOCSsvConfigPreviewComingSoon">Disponible dans une prochaine mise à jour.</sys:String>
     <sys:String x:Key="LOCSsvConfigNameFormatComingSoon">Disponible dans une prochaine mise à jour.</sys:String>
+    <sys:String x:Key="LOCSsvConfigTestConfigComingSoon">Le test de configuration sera disponible dans une prochaine mise à jour.</sys:String>
     <sys:String x:Key="LOCSsvConfigTestGame">Jeu de test</sys:String>
     <sys:String x:Key="LOCSsvConfigResolvedPathExists">Le dossier résolu existe.</sys:String>
     <sys:String x:Key="LOCSsvConfigResolvedPathMissing">Le dossier résolu n'existe pas.</sys:String>

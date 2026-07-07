@@ -247,9 +247,23 @@
                            Style="{DynamicResource ViewColumnLabelText}"
                            Text="{DynamicResource LOCSsvConfigTestGame}" />
                 <ComboBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3"
-                          ItemsSource="{Binding TestGames}"
+                          x:Name="TestGameComboBox"
+                          Style="{DynamicResource FilterComboBox}"
+                          ItemsSource="{Binding FilteredTestGamesView}"
                           SelectedItem="{Binding SelectedTestGame}"
-                          DisplayMemberPath="Name" />
+                          Text="{Binding SearchTextTestGame, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          IsEditable="True"
+                          IsTextSearchEnabled="False"
+                          StaysOpenOnEdit="True"
+                          DisplayMemberPath="Name"
+                          SelectionChanged="TestGameComboBox_SelectionChanged">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel VirtualizingStackPanel.IsVirtualizing="True"
+                                                    VirtualizingStackPanel.VirtualizationMode="Recycling" />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
 
                 <TextBlock Grid.Row="4"
                            Grid.Column="0"

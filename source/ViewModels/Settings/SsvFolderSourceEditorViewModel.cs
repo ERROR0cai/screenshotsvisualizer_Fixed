@@ -1,4 +1,5 @@
 using CommonPluginsShared;
+using CommonPluginsShared.Extensions;
 using CommonPluginsShared.Interfaces;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -10,6 +11,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace ScreenshotsVisualizer.ViewModels.Settings
@@ -22,6 +24,7 @@ namespace ScreenshotsVisualizer.ViewModels.Settings
         private readonly SsvPathResolver _pathResolver = new SsvPathResolver();
         private readonly bool _isGlobalSourceEditor;
         private TestGameItem _selectedTestGame;
+        private string _searchTextTestGame = string.Empty;
         private string _selectedAvailableSource;
         private SourceFilterMode _applicableSourceFilterMode;
         private SsvApplicableEmulatorFilter _applicableEmulatorFilter;
@@ -37,6 +40,8 @@ namespace ScreenshotsVisualizer.ViewModels.Settings
             WorkingCopy = workingCopy ?? throw new ArgumentNullException(nameof(workingCopy));
             _isGlobalSourceEditor = isGlobalSourceEditor;
             TestGames = new ObservableCollection<TestGameItem>();
+            FilteredTestGamesView = CollectionViewSource.GetDefaultView(TestGames);
+            FilteredTestGamesView.Filter = FilterTestGame;
             AvailableSourceNames = new ObservableCollection<string>();
             ApplicableSourceEntries = new ObservableCollection<string>();
 
@@ -72,6 +77,16 @@ namespace ScreenshotsVisualizer.ViewModels.Settings
         /// Gets games available as test context for live preview.
         /// </summary>
         public ObservableCollection<TestGameItem> TestGames { get; }
+
+        /// <summary>
+        /// Gets the filtered view of <see cref="TestGames"/> bound to the preview game ComboBox.
+        /// </summary>
+        public ICollectionView FilteredTestGamesView { get; }
+
+        /// <summary>
+        /// When <c>true</c>, suppresses filter refresh while WPF writes the selected item name into <see cref="SearchTextTestGame"/>.
+        /// </summary>
+        internal bool IsSelectingTestGame { get; set; }
 
         /// <summary>
         /// Gets distinct Playnite source names available for applicability filtering.
@@ -250,6 +265,42 @@ namespace ScreenshotsVisualizer.ViewModels.Settings
         public ICommand RemoveApplicableSourceCommand { get; }
 
         /// <summary>
+        /// Gets or sets the text typed in the preview game ComboBox.
+        /// </summary>
+        public string SearchTextTestGame
+        {
+            get => _searchTextTestGame;
+            set
+            {
+                if (_searchTextTestGame == value)
+                {
+                    return;
+                }
+
+                _searchTextTestGame = value ?? string.Empty;
+                NotifyPropertyChanged();
+
+                if (!IsSelectingTestGame)
+                {
+                    FilteredTestGamesView.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Resets the preview game search filter and restores the selected game name in the ComboBox text.
+        /// </summary>
+        public void OnTestGameSelected()
+        {
+            IsSelectingTestGame = true;
+            _searchTextTestGame = string.Empty;
+            FilteredTestGamesView.Refresh();
+            _searchTextTestGame = SelectedTestGame?.Name ?? string.Empty;
+            NotifyPropertyChanged(nameof(SearchTextTestGame));
+            IsSelectingTestGame = false;
+        }
+
+        /// <summary>
         /// Gets or sets the selected test game used for preview expansion.
         /// </summary>
         public TestGameItem SelectedTestGame
@@ -390,6 +441,27 @@ namespace ScreenshotsVisualizer.ViewModels.Settings
             SelectedTestGame = preferredGameId.HasValue
                 ? TestGames.FirstOrDefault(x => x.Id == preferredGameId.Value) ?? TestGames[0]
                 : TestGames[0];
+
+            _searchTextTestGame = SelectedTestGame?.Name ?? string.Empty;
+            NotifyPropertyChanged(nameof(SearchTextTestGame));
+        }
+
+        private bool FilterTestGame(object item)
+        {
+            if (string.IsNullOrEmpty(_searchTextTestGame))
+            {
+                return true;
+            }
+
+            if (!(item is TestGameItem game))
+            {
+                return false;
+            }
+
+            string normalizedName = game.Name.RemoveDiacritics();
+            string normalizedSearch = _searchTextTestGame.RemoveDiacritics();
+
+            return normalizedName.IndexOf(normalizedSearch, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         /// <summary>
@@ -444,5 +516,8 @@ namespace ScreenshotsVisualizer.ViewModels.Settings
         public string Name => Game?.Name ?? string.Empty;
 
         public Game Game { get; }
+
+        /// <inheritdoc />
+        public override string ToString() => Name;
     }
 }

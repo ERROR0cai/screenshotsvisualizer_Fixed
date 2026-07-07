@@ -10,6 +10,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ScreenshotsVisualizer.Views.Settings
 {
@@ -57,6 +58,29 @@ namespace ScreenshotsVisualizer.Views.Settings
         /// Gets whether the editor was opened to add a new source.
         /// </summary>
         public bool IsAddMode => _isAddMode;
+
+        private void TestGameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_viewModel == null)
+            {
+                return;
+            }
+
+            _viewModel.OnTestGameSelected();
+
+            ReleaseFocus(sender as UIElement);
+        }
+
+        private static void ReleaseFocus(UIElement element)
+        {
+            if (element == null)
+            {
+                return;
+            }
+
+            element.Focus();
+            element.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+        }
 
         private void BrowseFolderButton_Click(object sender, RoutedEventArgs e)
         {

@@ -29,6 +29,9 @@
 
         <playnitecontrols:SearchBox x:Name="SearchBox"
                                     Grid.Row="0"
+                                    Height="{Binding ActualHeight, ElementName=PART_SelectButton}"
+                                    MinHeight="{Binding ActualHeight, ElementName=PART_SelectButton}"
+                                    VerticalAlignment="Center"
                                     Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     TextChanged="SearchBox_TextChanged" />
 
@@ -86,7 +89,8 @@
                         DockPanel.Dock="Right"
                         Style="{StaticResource BottomButton}"
                         Click="CloseButton_Click" />
-                <Button Content="{DynamicResource LOCSelect}"
+                <Button x:Name="PART_SelectButton"
+                        Content="{DynamicResource LOCSelect}"
                         DockPanel.Dock="Right"
                         Style="{StaticResource BottomButton}"
                         IsEnabled="{Binding HasSelectedGame}"

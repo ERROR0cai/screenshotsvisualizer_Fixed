@@ -72,13 +72,17 @@
                                 <TextBlock DockPanel.Dock="Top" Style="{DynamicResource SectionHeaderText}"
                                            Text="{DynamicResource LOCSsvConfigSectionContexts}" Margin="0,0,0,8" />
 
-                                <Button DockPanel.Dock="Bottom" Margin="0,10,0,0"
+                                <Button x:Name="PART_AddGameButton"
+                                        DockPanel.Dock="Bottom" Margin="0,10,0,0"
                                         Content="{DynamicResource LOCSsvConfigAddGameTitle}"
                                         Command="{Binding ConfigurationContext.AddConfiguredGameCommand}" />
 
                                 <playnitecontrols:SearchBox x:Name="ContextSearchBox"
                                                             DockPanel.Dock="Top"
                                                             Margin="0,0,0,8"
+                                                            Height="{Binding ActualHeight, ElementName=PART_AddGameButton}"
+                                                            MinHeight="{Binding ActualHeight, ElementName=PART_AddGameButton}"
+                                                            VerticalAlignment="Center"
                                                             Text="{Binding ConfigurationContext.ContextSearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                             TextChanged="ContextSearchBox_TextChanged" />
 

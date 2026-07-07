@@ -159,3 +159,23 @@ Packages:
       - 'Updated: Localizations'
       - 'Fixed: Item size of PluginScreenshots'
       - 'Fixed: Error with external RetroArch (custom) screenshot location'
+  - Version: 3.5.0
+    RequiredApiVersion: 6.16.0
+    ReleaseDate: 2026-07-07
+    PackageUrl: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin/releases/download/v3.5.0/playnite-screenshotsvisualizer-plugin_3_5_0.pext
+    Changelog:
+      - 'Added: Master-detail settings layout with Archiving tab and variable picker'
+      - 'Added: Global screenshot folder presets for GOG and Xbox Game Bar'
+      - 'Added: Media format catalog with AVIF support'
+      - 'Added: ImageMagick custom conversion profiles'
+      - 'Added: Searchable game picker in settings'
+      - 'Added: Thumbnail cache management tab in settings'
+      - 'Added: External video player support'
+      - 'Improved: Gallery and scan thumbnail performance'
+      - 'Improved: Video metadata caching for faster loading'
+      - 'Fixed: Crash when copying missing screenshot'
+      - 'Fixed: Screenshots not detected when folder name contains double spaces (#93)'
+      - 'Fixed: Screenshots from different games in the same folder (#91)'
+      - 'Fixed: File pattern matching requires full file name match'
+      - 'Fixed: Carousel display issues'
+      - 'Fixed: Global screenshot sources applied correctly at runtime'

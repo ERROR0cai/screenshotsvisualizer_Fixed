@@ -1,11 +1,15 @@
 ﻿Id: playnite-screenshotsvisualizer-plugin
 Name: ScreenshotsVisualizer
 Author: Lacro59
-Version: 3.4.1
+Version: 3.5.0
 Module: ScreenshotsVisualizer.dll
 Type: GenericPlugin
 Icon: icon.png
 Links:
+  - Name: Wiki - User Guide
+    Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin/wiki/User-guide
+  - Name: Wiki - Theme Modders Guide
+    Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin/wiki/Theme-modders-guide
   - Name: Github
     Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin
   - Name: Issues Tracker

@@ -599,6 +599,10 @@
   <Import Project="playnite-plugincommon\CommonPluginsStores\CommonPluginsStores.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>powershell -ExecutionPolicy Unrestricted $(SolutionDir)..\build\build.ps1 -ConfigurationName $(ConfigurationName) -OutDir $(SolutionDir)$(OutDir) -SolutionDir $(SolutionDir)</PostBuildEvent>
+    <PostBuildEvent>rem powershell -ExecutionPolicy Unrestricted $(SolutionDir)..\build\build.ps1 -ConfigurationName $(ConfigurationName) -OutDir $(SolutionDir)$(OutDir) -SolutionDir $(SolutionDir)</PostBuildEvent>
   </PropertyGroup>
+  <!-- ====== Toolbox 自动打包 ====== -->
+  <Target Name="ToolboxPack" AfterTargets="Build">
+    <Exec Command="&quot;%LOCALAPPDATA%\Playnite\Toolbox.exe&quot; pack $(ProjectDir)$(OutDir) $(ProjectDir)bin" />
+  </Target>
 </Project>

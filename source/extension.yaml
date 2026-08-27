@@ -1,20 +1,12 @@
-﻿Id: playnite-screenshotsvisualizer-plugin
-Name: ScreenshotsVisualizer
-Author: Lacro59
-Version: 3.5.0
+﻿Id: playnite-screenshotsvisualizer-plugin_Fixed by ERROR0cai
+Name: ScreenshotsVisualizer_Fixed by ERROR0cai
+Author: ERROR0cai (Based on Lacro59's ScreenshotsVisualizer)
+Version: 3.5.0.233
 Module: ScreenshotsVisualizer.dll
 Type: GenericPlugin
 Icon: icon.png
 Links:
-  - Name: Wiki - User Guide
-    Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin/wiki/User-guide
-  - Name: Wiki - Theme Modders Guide
-    Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin/wiki/Theme-modders-guide
-  - Name: Github
+  - Name: Original GitHub
     Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin
-  - Name: Issues Tracker
-    Url: https://github.com/Lacro59/playnite-screenshotsvisualizer-plugin/issues
-  - Name: Translate
-    Url: https://crowdin.com/project/playnite-extensions
-  - Name: Ko-fi (Tips and Donations)
-    Url: https://ko-fi.com/lacro59
+  - Name: Fixed by ERROR0cai
+    Url: https://github.com/ERROR0cai/screenshotsvisualizer_Fixed

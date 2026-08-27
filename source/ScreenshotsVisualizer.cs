@@ -138,7 +138,7 @@ namespace ScreenshotsVisualizer
         {
             List<StartPageViewArgsBase> views = new List<StartPageViewArgsBase>
             {
-                new StartPageViewArgsBase 
+                new StartPageViewArgsBase
                 {
                     Name = ResourceProvider.GetString("LOCSsvCarousel"),
                     ViewId = "SsvCarousel",
@@ -320,6 +320,82 @@ namespace ScreenshotsVisualizer
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
         }
+
+        #region External refresh
+
+        /// <summary>
+        /// 获取 PluginDatabase 实例（供外部插件通过反射调用）
+        /// </summary>
+        public ScreenshotsVisualizerDatabase GetDatabase()
+        {
+            return PluginDatabase;
+        }
+
+        /// <summary>
+        /// 手动刷新指定游戏的截图数据（供外部插件调用）
+        /// </summary>
+        public void RefreshGame(Game game)
+        {
+            if (game == null) return;
+
+            try
+            {
+                Common.LogDebug(true, $"Manual refresh requested for game: {game.Name}");
+
+                GameSettings gameSettings = PluginDatabase.GetGameSettings(game.Id);
+                if (gameSettings != null)
+                {
+                    PluginDatabase.SetDataFromSettings(gameSettings);
+                    Common.LogDebug(true, $"Game data refreshed for: {game.Name}");
+                }
+
+                if (game.Id == PluginDatabase.GameContext.Id)
+                {
+                    PluginDatabase.SetThemesResources(PluginDatabase.GameContext);
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, false, true, PluginDatabase.PluginName);
+            }
+        }
+
+        /// <summary>
+        /// 手动刷新指定游戏的截图数据（通过游戏名称）
+        /// </summary>
+        public void RefreshGameByName(string gameName)
+        {
+            if (string.IsNullOrEmpty(gameName)) return;
+
+            try
+            {
+                var game = API.Instance.Database.Games
+                    .FirstOrDefault(g => g.Name.Equals(gameName, StringComparison.OrdinalIgnoreCase));
+
+                if (game != null)
+                {
+                    RefreshGame(game);
+                }
+                else
+                {
+                    Common.LogDebug(true, $"Game not found: {gameName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, false, true, PluginDatabase.PluginName);
+            }
+        }
+
+        /// <summary>
+        /// 刷新指定游戏的截图数据（兼容 GameSnap 的调用）
+        /// </summary>
+        public void RefreshData(Game game)
+        {
+            RefreshGame(game);
+        }
+
+        #endregion
 
         #region Settings
 

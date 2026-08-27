@@ -41,7 +41,7 @@ namespace ScreenshotsVisualizer.Services
 
         public ScreenshotsVisualizerDatabase(ScreenshotsVisualizerSettings pluginSettings, string pluginUserDataPath) : base(pluginSettings, "ScreenshotsVisualizer", pluginUserDataPath)
         {
-            TagBefore = "[SSV]";
+            TagBefore = "[ScreenshotsVisualizer]";
             PluginWindows = new ScreenshotsVisualizerWindows(PluginName, this);
             PluginExportCsv = new ScreenshotsVisualizerExport();
             _pathResolver = new SsvPathResolver();

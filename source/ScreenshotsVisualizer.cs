@@ -324,7 +324,7 @@ namespace ScreenshotsVisualizer
         #region External refresh
 
         /// <summary>
-        /// 获取 PluginDatabase 实例（供外部插件通过反射调用）
+        /// Gets the PluginDatabase instance for external plugins to call via reflection.
         /// </summary>
         public ScreenshotsVisualizerDatabase GetDatabase()
         {
@@ -332,7 +332,7 @@ namespace ScreenshotsVisualizer
         }
 
         /// <summary>
-        /// 手动刷新指定游戏的截图数据（供外部插件调用）
+        /// Manually refreshes screenshot data for the specified game (for external plugin calls).
         /// </summary>
         public void RefreshGame(Game game)
         {
@@ -361,7 +361,7 @@ namespace ScreenshotsVisualizer
         }
 
         /// <summary>
-        /// 手动刷新指定游戏的截图数据（通过游戏名称）
+        /// Manually refreshes screenshot data for the specified game by game name.
         /// </summary>
         public void RefreshGameByName(string gameName)
         {
@@ -388,7 +388,7 @@ namespace ScreenshotsVisualizer
         }
 
         /// <summary>
-        /// 刷新指定游戏的截图数据（兼容 GameSnap 的调用）
+        /// Refreshes screenshot data for the specified game (compatible with GameSnap calls).
         /// </summary>
         public void RefreshData(Game game)
         {

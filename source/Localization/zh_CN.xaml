@@ -1,4 +1,4 @@
-﻿﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:String x:Key="LOCSsvScreenshot">{0} 张截图</sys:String>
@@ -13,56 +13,56 @@
     <sys:String x:Key="LOCSsvImageMagickPathLabel">ImageMagick 路径：</sys:String>
     <sys:String x:Key="LOCSsvImageConversionSection">图片转换命令</sys:String>
     <sys:String x:Key="LOCSsvImageConversionTabTitle">图片转换</sys:String>
-    <sys:String x:Key="LOCSsvImageConversionIntro">配置 ImageMagick 和自定义转换配置，可从游戏和主菜单使用。</sys:String>
+    <sys:String x:Key="LOCSsvImageConversionIntro">配置用于游戏菜单和主菜单的 ImageMagick 及自定义图片转换方案。</sys:String>
     <sys:String x:Key="LOCSsvImageConversionAdd">添加命令</sys:String>
     <sys:String x:Key="LOCSsvImageConversionEdit">编辑命令</sys:String>
-    <sys:String x:Key="LOCSsvImageConversionAddTitle">添加转换命令</sys:String>
-    <sys:String x:Key="LOCSsvImageConversionEditTitle">编辑转换命令</sys:String>
+    <sys:String x:Key="LOCSsvImageConversionAddTitle">添加图片转换命令</sys:String>
+    <sys:String x:Key="LOCSsvImageConversionEditTitle">编辑图片转换命令</sys:String>
     <sys:String x:Key="LOCSsvImageConversionName">名称</sys:String>
     <sys:String x:Key="LOCSsvImageConversionOutputFormat">输出格式</sys:String>
     <sys:String x:Key="LOCSsvImageConversionQuality">质量</sys:String>
-    <sys:String x:Key="LOCSsvImageConversionStripMetadata">剥离元数据</sys:String>
-    <sys:String x:Key="LOCSsvImageConversionExtraArguments">额外参数</sys:String>
+    <sys:String x:Key="LOCSsvImageConversionStripMetadata">移除元数据</sys:String>
+    <sys:String x:Key="LOCSsvImageConversionExtraArguments">附加参数</sys:String>
     <sys:String x:Key="LOCSsvImageConversionCommandPreview">命令预览</sys:String>
-    <sys:String x:Key="LOCSsvImageConversionNameRequired">命令名称不能为空。</sys:String>
-    <sys:String x:Key="LOCSsvImageConversionOutputFormatRequired">输出格式不能为空。</sys:String>
-    <sys:String x:Key="LOCSsvImageConversionNoCommands">尚未配置转换命令。</sys:String>
+    <sys:String x:Key="LOCSsvImageConversionNameRequired">必须填写命令名称。</sys:String>
+    <sys:String x:Key="LOCSsvImageConversionOutputFormatRequired">必须填写输出格式。</sys:String>
+    <sys:String x:Key="LOCSsvImageConversionNoCommands">尚未配置图片转换命令。</sys:String>
 
     <sys:String x:Key="LOCSsvMediaFormatsTabTitle">支持的格式</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatsIntro">管理扫描的图片和视频扩展名列表。基础格式（.jpg、.jpeg、.png、.mp4）无法移除。可添加任意扩展名（例如 .avif 或 .jxl）并移除可选扩展名。更改后需要刷新库。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatsIntro">管理扫描时识别的图片和视频扩展名。必需格式（.jpg、.jpeg、.png、.mp4）不可删除。可以添加其他扩展名（例如 .avif 或 .jxl），也可以移除可选格式。修改后需要刷新游戏库。</sys:String>
     <sys:String x:Key="LOCSsvMediaFormatsImageSection">图片扩展名</sys:String>
     <sys:String x:Key="LOCSsvMediaFormatsVideoSection">视频扩展名</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatsRestoreDefaults">恢复默认</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatsRestoreDefaults">恢复默认值</sys:String>
     <sys:String x:Key="LOCSsvMediaFormatsEnableAll">全部启用</sys:String>
     <sys:String x:Key="LOCSsvMediaFormatsDisableAll">全部禁用</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatsEssentialHint">保存设置时始终保留的通用格式。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatsEssentialHint">保存设置时，常用的必需格式会始终保持启用。</sys:String>
     <sys:String x:Key="LOCSsvMediaFormatsCustomImageSection">其他图片扩展名</sys:String>
     <sys:String x:Key="LOCSsvMediaFormatsCustomVideoSection">其他视频扩展名</sys:String>
     <sys:String x:Key="LOCSsvMediaFormatsAddCustom">添加</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatsCustomExtensionHint">输入扩展名，例如 .jxl（仅限字母和数字）。</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatsExtensionInvalid">扩展名无效。请使用 .jxl 之类的格式。</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatsExtensionDuplicate">该扩展名已存在。</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatCodecCustomUnknown">自定义扩展名，显示取决于 Windows 或已安装的解码器。</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatCodecWicNative">由 Windows 内置图像支持解码。</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatCodecWicExtension">需要可选的 Windows 应用商店图像解码器（AV1、WebP 或 HEIF 扩展）。</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatCodecCustomDecoder">由插件解码（TGA）。</sys:String>
-    <sys:String x:Key="LOCSsvMediaFormatCodecFfmpeg">视频缩略图和元数据使用杂项选项卡中的 ffmpeg/ffprobe 路径。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatsCustomExtensionHint">输入扩展名，例如 .jxl（只允许字母和数字）。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatsExtensionInvalid">扩展名无效，请输入类似 .jxl 的格式。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatsExtensionDuplicate">此扩展名已存在。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatCodecCustomUnknown">自定义扩展名；能否显示取决于 Windows 或已安装的解码器。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatCodecWicNative">由 Windows 内置图像组件解码。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatCodecWicExtension">需要安装可选的 Windows 图像解码扩展（AV1、WebP 或 HEIF）。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatCodecCustomDecoder">由插件内置解码器处理（TGA）。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatCodecFfmpeg">视频缩略图与元数据使用“杂项”选项卡中配置的 ffmpeg/ffprobe 路径。</sys:String>
 
 
     <!-- MainView -->
 
-    <sys:String x:Key="LOCSsv">截图可视化</sys:String>
+    <sys:String x:Key="LOCSsv">截图可视化-ScreenshotsVisualizer</sys:String>
     <sys:String x:Key="LOCSsvTitle">截图</sys:String>
 
     <sys:String x:Key="LOCSsvLatest">最新</sys:String>
 
     <sys:String x:Key="LOCSsvViewScreenshots">查看游戏截图</sys:String>
     <sys:String x:Key="LOCSsvOpenScreenshotsDirectory">打开截图目录</sys:String>
-    <sys:String x:Key="LOCSsvMoveToSave">移动截图到保存目录</sys:String>
+    <sys:String x:Key="LOCSsvMoveToSave">将截图移动到归档目录</sys:String>
     <sys:String x:Key="LOCSsvConvertImages">转换图片</sys:String>
-    <sys:String x:Key="LOCSsvImageConversionUnnamed">未命名命令</sys:String>
+    <sys:String x:Key="LOCSsvImageConversionUnnamed">未命名的命令</sys:String>
 
-    <sys:String x:Key="LOCSsvMovingToSave">正在移动截图...</sys:String>
+    <sys:String x:Key="LOCSsvMovingToSave">移动截图...</sys:String>
     <sys:String x:Key="LOCSsvCsvImageCount">图片数量</sys:String>
     <sys:String x:Key="LOCSsvCsvImageTotalSizeBytes">图片总大小（字节）</sys:String>
     <sys:String x:Key="LOCSsvCsvImageTotalSize">图片总大小</sys:String>
@@ -74,17 +74,17 @@
     <sys:String x:Key="LOCSsvCsvTotalSizeBytes">总大小（字节）</sys:String>
     <sys:String x:Key="LOCSsvCsvTotalSize">总大小</sys:String>
 
-    <sys:String x:Key="LOCSsvWarningToMove">确定要移动所有截图吗？</sys:String>
+    <sys:String x:Key="LOCSsvWarningToMove">您确定要移动所有屏幕截图吗</sys:String>
 
 
     <!-- ScreenshotsVisualizerView -->
 
-    <sys:String x:Key="LOCSsvDeleteConfirm">确定要删除 {0} 吗？</sys:String>
+    <sys:String x:Key="LOCSsvDeleteConfirm">您确定要删除 {0} 吗</sys:String>
 
 
     <!-- SsvManager -->
 
-    <sys:String x:Key="LOCSsvLastSsv">最后截图</sys:String>
+    <sys:String x:Key="LOCSsvLastSsv">最近一张截图</sys:String>
 
 
     <!-- StartPage -->
@@ -93,13 +93,13 @@
     <sys:String x:Key="LOCSsvCarouselAddGameName">显示游戏名称</sys:String>
     <sys:String x:Key="LOCSsvCarouselEnableAllRandom">随机排列所有截图</sys:String>
     <sys:String x:Key="LOCSsvCarouselEnableLowerResolution">使用缩略图</sys:String>
-    <sys:String x:Key="LOCSsvCarouselOnlyMostRecent">仅显示每个游戏最近的截图</sys:String>
-    <sys:String x:Key="LOCSsvCarouselLimitPerGame">每个游戏的截图数量</sys:String>
+    <sys:String x:Key="LOCSsvCarouselOnlyMostRecent">仅显示每款游戏最近的截图</sys:String>
+    <sys:String x:Key="LOCSsvCarouselLimitPerGame">每款游戏的截图数量</sys:String>
     <sys:String x:Key="LOCSsvCarouselLimitGame">游戏数量</sys:String>
     <sys:String x:Key="LOCSsvCarouselEnableAutoChange">启用自动切换</sys:String>
-    <sys:String x:Key="LOCSsvCarouselTime">切换间隔（秒）</sys:String>
-    <sys:String x:Key="LOCSsvCarouselOnlyFavorite">仅显示收藏游戏</sys:String>
-    <sys:String x:Key="LOCSsvCarouselSourcesList">仅限特定来源</sys:String>
+    <sys:String x:Key="LOCSsvCarouselTime">间隔（秒）</sys:String>
+    <sys:String x:Key="LOCSsvCarouselOnlyFavorite">仅显示收藏的游戏</sys:String>
+    <sys:String x:Key="LOCSsvCarouselSourcesList">仅限指定来源</sys:String>
     <sys:String x:Key="LOCSsvCarouselWithVideo">包含视频</sys:String>
 
 
@@ -109,17 +109,17 @@
 
     <sys:String x:Key="LOCSsvFfmpegPathLabel">ffmpeg 路径：</sys:String>
     <sys:String x:Key="LOCSsvFfprobePathLabel">ffprobe 路径：</sys:String>
-    <sys:String x:Key="LOCSsvDownloadFfmpegLabel">下载 ffmpeg 安装包</sys:String>
+    <sys:String x:Key="LOCSsvDownloadFfmpegLabel">下载 ffmpeg 工具包</sys:String>
 
-    <sys:String x:Key="LOCSsvThumbnailCacheDescription">缩略图缓存，用于加快图库加载速度。</sys:String>
-    <sys:String x:Key="LOCSsvThumbnailCacheItemCountLabel">缓存数量：</sys:String>
+    <sys:String x:Key="LOCSsvThumbnailCacheDescription">用于加快图库加载速度的缩略图缓存。</sys:String>
+    <sys:String x:Key="LOCSsvThumbnailCacheItemCountLabel">缓存项目数：</sys:String>
     <sys:String x:Key="LOCSsvThumbnailCacheSizeLabel">总大小：</sys:String>
 
     <sys:String x:Key="LOCSsvGlobalPath">全局截图路径</sys:String>
 
     <sys:String x:Key="LOCSsvScanSubFolders">扫描子文件夹</sys:String>
 
-    <sys:String x:Key="LOCSsvAddTag">游戏有截图时添加标签</sys:String>
+    <sys:String x:Key="LOCSsvAddTag">若游戏有截图则添加标签</sys:String>
     <sys:String x:Key="LOCSsvAddSteamGame">添加 Steam 游戏</sys:String>
     <sys:String x:Key="LOCSsvPresetSteam">Steam</sys:String>
     <sys:String x:Key="LOCSsvPresetGog">GOG Galaxy</sys:String>
@@ -127,39 +127,39 @@
     <sys:String x:Key="LOCSsvPresetRetroArch">RetroArch</sys:String>
     <sys:String x:Key="LOCSsvPresetScummVM">ScummVM</sys:String>
     <sys:String x:Key="LOCSsvPresetXboxGameBar">Xbox Game Bar</sys:String>
-    <sys:String x:Key="LOCSsvPresetGogTooltip">为 GOG 库游戏添加 GOG Galaxy 全局源（{GogScreenshotDir}\{Name}）。</sys:String>
-    <sys:String x:Key="LOCSsvPresetUbisoftTooltip">为 Ubisoft 库游戏添加 Ubisoft Connect 全局源（{UbisoftScreenshotsDir}\{Name}）。</sys:String>
-    <sys:String x:Key="LOCSsvPresetRetroArchTooltip">添加 RetroArch 全局源并应用模拟器文件模式过滤。</sys:String>
-    <sys:String x:Key="LOCSsvPresetScummVMTooltip">添加 ScummVM 全局源并应用模拟器文件模式过滤。</sys:String>
-    <sys:String x:Key="LOCSsvPresetXboxGameBarTooltip">添加 Xbox Game Bar 捕获文件夹（{XboxGamebarScreenshotsDir}），文件模式为 {Name} *。</sys:String>
-    <sys:String x:Key="LOCSsvPresetAlreadyInGlobal">该预设已配置在全局源中。</sys:String>
-    <sys:String x:Key="LOCSsvConfigQuickAddHint">向全局源添加预设条目。每个预设只能添加一次，扫描时会根据适用范围过滤游戏。</sys:String>
-    <sys:String x:Key="LOCSsvConfigPathVariablesTooltip" xml:space="preserve">在文件夹路径中使用占位符。Playnite：{Name}、{GameId}、{InstallDir}、{Platform}、…
+    <sys:String x:Key="LOCSsvPresetGogTooltip">为 GOG 游戏库中的游戏添加 GOG Galaxy 全局截图来源（{GogScreenshotDir}\{Name}）。</sys:String>
+    <sys:String x:Key="LOCSsvPresetUbisoftTooltip">为 Ubisoft 游戏库中的游戏添加 Ubisoft Connect 全局截图来源（{UbisoftScreenshotsDir}\{Name}）。</sys:String>
+    <sys:String x:Key="LOCSsvPresetRetroArchTooltip">添加带模拟器文件名模式筛选的 RetroArch 全局来源。</sys:String>
+    <sys:String x:Key="LOCSsvPresetScummVMTooltip">添加带模拟器文件名模式筛选的 ScummVM 全局来源。</sys:String>
+    <sys:String x:Key="LOCSsvPresetXboxGameBarTooltip">添加 Xbox Game Bar 捕获目录（{XboxGamebarScreenshotsDir}），文件名模式为 {Name} *。</sys:String>
+    <sys:String x:Key="LOCSsvPresetAlreadyInGlobal">此预设已存在于全局截图来源中。</sys:String>
+    <sys:String x:Key="LOCSsvConfigQuickAddHint">将标准预设添加到全局来源。每种预设只能添加一次；扫描时根据适用条件确定哪些游戏使用它。</sys:String>
+    <sys:String x:Key="LOCSsvConfigPathVariablesTooltip" xml:space="preserve">可在文件夹路径中使用变量。Playnite：{Name}、{GameId}、{InstallDir}、{Platform} 等。
 
-商店文件夹：
+商店截图目录：
 {SteamScreenshotsDir}、{UbisoftScreenshotsDir}、{GogScreenshotDir}、{XboxGamebarScreenshotsDir}、{RetroArchScreenshotsDir}
 
-使用“插入变量”查看完整列表及实时预览。</sys:String>
+点击“插入变量”可查看完整列表及实时预览。</sys:String>
 
     <sys:String x:Key="LOCSsvGlobalSourceApplicability">适用范围</sys:String>
-    <sys:String x:Key="LOCSsvGlobalSourceApplicabilityHint">限制哪些游戏在扫描时使用此全局源。保留为“全部来源”且模拟器为“全部”则适用于所有游戏。</sys:String>
+    <sys:String x:Key="LOCSsvGlobalSourceApplicabilityHint">限定扫描时使用此全局来源的游戏。来源设置为“全部”，模拟器设置为“无”，即可适用于所有游戏。</sys:String>
     <sys:String x:Key="LOCSsvGlobalSourceFilterMode">Playnite 来源</sys:String>
     <sys:String x:Key="LOCSsvGlobalSourceFilterAll">全部来源</sys:String>
-    <sys:String x:Key="LOCSsvGlobalSourceFilterWhitelist">仅限选定</sys:String>
-    <sys:String x:Key="LOCSsvGlobalSourceFilterBlacklist">排除选定</sys:String>
+    <sys:String x:Key="LOCSsvGlobalSourceFilterWhitelist">仅选中的来源</sys:String>
+    <sys:String x:Key="LOCSsvGlobalSourceFilterBlacklist">排除选中的来源</sys:String>
     <sys:String x:Key="LOCSsvGlobalSourceFilterSources">来源名称</sys:String>
     <sys:String x:Key="LOCSsvGlobalSourceFilterAddSource">添加</sys:String>
     <sys:String x:Key="LOCSsvGlobalSourceEmulatorFilter">模拟器</sys:String>
-    <sys:String x:Key="LOCSsvGlobalSourceEmulatorNone">全部</sys:String>
+    <sys:String x:Key="LOCSsvGlobalSourceEmulatorNone">任意模拟器</sys:String>
     <sys:String x:Key="LOCSsvGlobalSourceEmulatorRetroArch">仅 RetroArch</sys:String>
     <sys:String x:Key="LOCSsvGlobalSourceEmulatorScummVM">仅 ScummVM</sys:String>
 
-    <sys:String x:Key="LOCSsvNumberToDigit">将数字转为 {digit}</sys:String>
+    <sys:String x:Key="LOCSsvNumberToDigit">将数字转换为 {digit}</sys:String>
 
-    <sys:String x:Key="LOCSsvShowSinglePicture">显示单张截图控件</sys:String>
-    <sys:String x:Key="LOCSsvShowPictures">显示截图列表控件</sys:String>
-    <sys:String x:Key="LOCSsvShowPicturesVertical">显示垂直截图列表控件</sys:String>
-    <sys:String x:Key="LOCSsvShowPicturesList">显示大图截图列表控件</sys:String>
+    <sys:String x:Key="LOCSsvShowSinglePicture">显示单张截图的控件</sys:String>
+    <sys:String x:Key="LOCSsvShowPictures">显示截图列表的控件</sys:String>
+    <sys:String x:Key="LOCSsvShowPicturesVertical">显示纵向截图列表的控件</sys:String>
+    <sys:String x:Key="LOCSsvShowPicturesList">显示大量截图的列表控件</sys:String>
     <sys:String x:Key="LOCSsvAddBorder">添加边框</sys:String>
     <sys:String x:Key="LOCSsvAddRoundedCorner">添加圆角</sys:String>
 
@@ -169,108 +169,140 @@
 
     <sys:String x:Key="LOCSsvHideScreenshotsInfos">隐藏截图信息</sys:String>
 
-    <sys:String x:Key="LOCSsvOpenViewerWithOnSelection">选择时打开查看器</sys:String>
-    <sys:String x:Key="LOCSsvLinkWithSinglePicture">与单张截图视图联动</sys:String>
+    <sys:String x:Key="LOCSsvOpenViewerWithOnSelection">选中图片时打开查看器</sys:String>
+    <sys:String x:Key="LOCSsvLinkWithSinglePicture">将选中项与单张截图视图关联</sys:String>
 
-    <sys:String x:Key="LOCSsvUsedFilePattern">使用文件模式</sys:String>
-    <sys:String x:Key="LOCSsvEnableFolderToSave">启用移动截图到指定文件夹</sys:String>
-    <sys:String x:Key="LOCSsvFilePattern">文件模式</sys:String>
+    <sys:String x:Key="LOCSsvUsedFilePattern">已使用的文件名模式</sys:String>
+    <sys:String x:Key="LOCSsvEnableFolderToSave">启用将截图移动到统一文件夹的功能</sys:String>
+    <sys:String x:Key="LOCSsvFilePattern">文件名模式</sys:String>
 
     <sys:String x:Key="LOCSsvSetAbsolute">转换为绝对路径</sys:String>
     <sys:String x:Key="LOCSsvSetRelative">转换为相对路径</sys:String>
 
-    <sys:String x:Key="LOCSsvFilePatternTooltipIntro">此外，您还可以使用：</sys:String>
+    <sys:String x:Key="LOCSsvFilePatternTooltipIntro">还可以使用：</sys:String>
     <sys:String x:Key="LOCSsvFilePatternTooltipFormatDateModified">yyyy[-_]MM[-_]dd</sys:String>
     <sys:String x:Key="LOCSsvFilePatternTooltipFormatDateTimeModified">yyyy[-_]MM[-_]dd[ -_]HH[-_]mm[-_]ss</sys:String>
     <sys:String x:Key="LOCSsvFilePatternTooltipDigitDescription">数字</sys:String>
     <sys:String x:Key="LOCSsvFilePatternTooltipExample">示例：</sys:String>
 
-    <sys:String x:Key="LOCSsvGlobalSearchTooltip" xml:space="preserve">为所有游戏添加此文件夹。
+    <sys:String x:Key="LOCSsvGlobalSearchTooltip" xml:space="preserve">为所有游戏添加该文件夹。
 
-示例：
+例子：
 {PlayniteDir}\ExtraMetadata\{GameId}\Screenshots</sys:String>
 
-    <sys:String x:Key="LOCSsvMoveFolderExplain" xml:space="preserve">添加一个游戏菜单操作，将所有配置的源文件夹中的截图移动到统一的归档文件夹。
-归档文件夹路径使用上述目标字段。如果路径中未包含 {Name}，将自动添加。
-文件将使用“文件模式”重命名，然后更新插件链接。
+    <sys:String x:Key="LOCSsvMoveFolderExplain" xml:space="preserve">在游戏菜单中添加操作，将所有已配置来源目录中的截图移至同一个归档目录。
+归档路径使用上方填写的目标目录。如果路径中没有 {Name}，会自动添加。
+文件将按照“文件名模式”重命名，并更新插件中的文件关联。
 
 示例：
-源文件夹：
+来源目录：
 - {Public}\Screenshots
 - {SteamScreenshotsDir}\435790\screenshots
 - {GogScreenshotDir}\{Name}
 - {XboxGamebarScreenshotsDir}
 
-归档目标：
+归档目标目录：
 {DropboxFolder}\Screenshots\{Name}</sys:String>
 
     <!-- Notifications -->
 
-    <sys:String x:Key="LOCSsvMoveToFolderToSaveError">缺少移动截图所需的设置</sys:String>
+    <sys:String x:Key="LOCSsvMoveToFolderToSaveError">缺失用于移动截图的设置</sys:String>
 
-    <!-- Settings — Configuration tab -->
+    <!-- Settings — Configuration tab (phase 1.5 master-detail) -->
 
     <!-- Layout sections -->
-    <sys:String x:Key="LOCSsvConfigSectionContexts">上下文</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionSources">来源</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionSourcesFor">来源 — {0}</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionQuickAdd">快速添加</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionArchiving">归档</sys:String>
-    <sys:String x:Key="LOCSsvArchivingIntro">配置如何通过游戏菜单将截图移动到统一的归档文件夹。这些设置自动应用于所有游戏——归档文件夹会在扫描时包含，包括没有单独配置的游戏。在路径中使用 {Name} 可创建按游戏区分的子文件夹。</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionContexts">配置范围</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionSources">截图来源</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionSourcesFor">截图来源 — {0}</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionQuickAdd">快捷添加</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionArchiving">截图归档</sys:String>
+    <sys:String x:Key="LOCSsvArchivingIntro">设置如何通过游戏菜单将截图移动到统一的归档文件夹。这些设置会自动应用于所有游戏；扫描时也会包含归档文件夹，即使该游戏没有单独配置截图来源。可以在路径中使用 {Name} 变量，为每款游戏创建独立的子文件夹。</sys:String>
     <sys:String x:Key="LOCSsvArchivingDestinationFolder">归档目标文件夹</sys:String>
     <sys:String x:Key="LOCSsvArchiveMigrationTitle">归档设置迁移</sys:String>
-    <sys:String x:Key="LOCSsvArchiveMigrationCreatingBackup">正在创建设置备份...</sys:String>
-    <sys:String x:Key="LOCSsvArchiveMigrationCleaningDuplicates">正在移除重复的归档条目...</sys:String>
-    <sys:String x:Key="LOCSsvArchiveMigrationSavingSettings">正在保存设置...</sys:String>
-    <sys:String x:Key="LOCSsvArchiveMigrationCompleted">迁移完成。</sys:String>
+    <sys:String x:Key="LOCSsvArchiveMigrationCreatingBackup">正在备份设置…</sys:String>
+    <sys:String x:Key="LOCSsvArchiveMigrationCleaningDuplicates">正在清理重复的归档条目…</sys:String>
+    <sys:String x:Key="LOCSsvArchiveMigrationSavingSettings">正在保存设置…</sys:String>
+    <sys:String x:Key="LOCSsvArchiveMigrationCompleted">迁移已完成。</sys:String>
     <sys:String x:Key="LOCSsvArchiveMigrationFailed">归档设置迁移失败：{0}</sys:String>
-    <sys:String x:Key="LOCSsvArchiveMigrationNoDuplicatesRemoved">未移除重复的归档条目。</sys:String>
+    <sys:String x:Key="LOCSsvArchiveMigrationNoDuplicatesRemoved">没有需要移除的重复归档条目。</sys:String>
     <sys:String x:Key="LOCSsvPresetMigrationTitle">预设设置迁移</sys:String>
-    <sys:String x:Key="LOCSsvPresetMigrationCreatingBackup">正在创建设置备份...</sys:String>
-    <sys:String x:Key="LOCSsvPresetMigrationConsolidating">正在整合全局预设源...</sys:String>
-    <sys:String x:Key="LOCSsvPresetMigrationSavingSettings">正在保存设置...</sys:String>
-    <sys:String x:Key="LOCSsvPresetMigrationCompleted">迁移完成。</sys:String>
+    <sys:String x:Key="LOCSsvPresetMigrationCreatingBackup">正在备份设置…</sys:String>
+    <sys:String x:Key="LOCSsvPresetMigrationConsolidating">正在合并全局预设来源…</sys:String>
+    <sys:String x:Key="LOCSsvPresetMigrationSavingSettings">正在保存设置…</sys:String>
+    <sys:String x:Key="LOCSsvPresetMigrationCompleted">迁移已完成。</sys:String>
     <sys:String x:Key="LOCSsvPresetMigrationFailed">预设设置迁移失败：{0}</sys:String>
-    <sys:String x:Key="LOCSsvPresetMigrationNoChangesApplied">未应用预设迁移更改。</sys:String>
+    <sys:String x:Key="LOCSsvPresetMigrationNoChangesApplied">没有需要迁移的预设设置。</sys:String>
     <sys:String x:Key="LOCSsvFilePatternInsertVariable">插入变量</sys:String>
     <sys:String x:Key="LOCSsvFilePatternAvailableVariables">可用变量：{Name}、{DateModified}、{DateTimeModified}、{digit}</sys:String>
     <sys:String x:Key="LOCSsvFolderToSaveInsertVariable">插入路径变量</sys:String>
     <sys:String x:Key="LOCSsvConfigContextGlobals">全局</sys:String>
-    <sys:String x:Key="LOCSsvConfigSectionConfiguredGames">已配置的游戏</sys:String>
-    <sys:String x:Key="LOCSsvConfigConfiguredGamesCount">{0} 个游戏</sys:String>
-    <sys:String x:Key="LOCSsvConfigNoActiveSources">该上下文未配置截图来源。</sys:String>
-    <sys:String x:Key="LOCSsvConfigOverrideGlobalConfigs">覆盖此游戏的全局源</sys:String>
+    <sys:String x:Key="LOCSsvConfigSectionConfiguredGames">已配置游戏</sys:String>
+    <sys:String x:Key="LOCSsvConfigConfiguredGamesCount">{0} 款游戏</sys:String>
+    <sys:String x:Key="LOCSsvConfigNoActiveSources">当前配置范围没有截图来源。</sys:String>
+    <sys:String x:Key="LOCSsvConfigOverrideGlobalConfigs">使用此游戏的配置覆盖全局截图来源</sys:String>
 
-    <!-- Legacy phase 1 -->
+    <!-- Legacy phase 1 (kept for Crowdin compatibility) -->
     <sys:String x:Key="LOCSsvConfigSectionGlobalPaths">全局路径</sys:String>
     <sys:String x:Key="LOCSsvConfigSectionManualAdd">手动添加游戏</sys:String>
-    <sys:String x:Key="LOCSsvConfigNoGamesConfigured">未配置游戏。请在全局中使用“添加游戏”或快速添加预设。</sys:String>
+    <sys:String x:Key="LOCSsvConfigNoGamesConfigured">尚未配置游戏。可点击“添加游戏”，或在“全局”中使用快捷预设。</sys:String>
 
     <!-- Game selection dialog -->
     <sys:String x:Key="LOCSsvConfigAddGameTitle">添加游戏</sys:String>
     <sys:String x:Key="LOCSsvConfigSelectGameTitle">选择要配置的游戏</sys:String>
-    <sys:String x:Key="LOCSsvConfigNoUnconfiguredGames">所有游戏均已配置。</sys:String>
+    <sys:String x:Key="LOCSsvConfigNoUnconfiguredGames">游戏库中的所有游戏都已配置。</sys:String>
 
     <!-- Source editor dialog -->
     <sys:String x:Key="LOCSsvConfigSourcePath">截图文件夹</sys:String>
-    <sys:String x:Key="LOCSsvSourceListFilePatternPrefix">文件模式：{0}</sys:String>
+    <sys:String x:Key="LOCSsvSourceListFilePatternPrefix">文件名模式：{0}</sys:String>
     <sys:String x:Key="LOCSsvSourceListSourcesWhitelist">来源：{0}</sys:String>
-    <sys:String x:Key="LOCSsvSourceListSourcesBlacklist">排除的来源：{0}</sys:String>
+    <sys:String x:Key="LOCSsvSourceListSourcesBlacklist">排除来源：{0}</sys:String>
     <sys:String x:Key="LOCSsvConfigAddSourceTitle">添加截图来源</sys:String>
     <sys:String x:Key="LOCSsvConfigEditSourceTitle">编辑截图来源</sys:String>
     <sys:String x:Key="LOCSsvConfigSaveSource">保存</sys:String>
     <sys:String x:Key="LOCSsvConfigAddSource">添加来源</sys:String>
     <sys:String x:Key="LOCSsvConfigEditSource">编辑</sys:String>
-    <sys:String x:Key="LOCSsvConfigSourcePathRequired">截图文件夹路径不能为空。</sys:String>
+    <sys:String x:Key="LOCSsvConfigSourcePathRequired">必须填写截图文件夹路径。</sys:String>
 
     <!-- Phase 2 placeholders -->
     <sys:String x:Key="LOCSsvConfigPreview">预览</sys:String>
     <sys:String x:Key="LOCSsvConfigNameFormat">名称格式</sys:String>
-    <sys:String x:Key="LOCSsvConfigPreviewComingSoon">将在未来更新中提供。</sys:String>
-    <sys:String x:Key="LOCSsvConfigNameFormatComingSoon">将在未来更新中提供。</sys:String>
-    <sys:String x:Key="LOCSsvConfigTestConfigComingSoon">配置测试将在未来更新中提供。</sys:String>
+    <sys:String x:Key="LOCSsvConfigPreviewComingSoon">将在后续版本中提供。</sys:String>
+    <sys:String x:Key="LOCSsvConfigNameFormatComingSoon">将在后续版本中提供。</sys:String>
+    <sys:String x:Key="LOCSsvConfigTestConfigComingSoon">配置测试功能将在后续版本中提供。</sys:String>
     <sys:String x:Key="LOCSsvConfigTestGame">测试游戏</sys:String>
-    <sys:String x:Key="LOCSsvConfigResolvedPathExists">解析的文件夹存在。</sys:String>
-    <sys:String x:Key="LOCSsvConfigResolvedPathMissing">解析的文件夹不存在。</sys:String>
+    <sys:String x:Key="LOCSsvConfigResolvedPathExists">解析后的文件夹存在。</sys:String>
+    <sys:String x:Key="LOCSsvConfigResolvedPathMissing">解析后的文件夹不存在。</sys:String>
 
+
+    <!-- Added localization keys for ScreenshotsVisualizer 3.6.0 -->
+    <sys:String x:Key="LOCSsvSortBy">排序方式</sys:String>
+    <sys:String x:Key="LOCSsvSortByDate">日期</sys:String>
+    <sys:String x:Key="LOCSsvSortByName">名称</sys:String>
+    <sys:String x:Key="LOCSsvSortBySize">大小</sys:String>
+    <sys:String x:Key="LOCSsvSortByType">类型</sys:String>
+    <sys:String x:Key="LOCSsvSortAscending">升序</sys:String>
+    <sys:String x:Key="LOCSsvSortDescending">降序</sys:String>
+    <sys:String x:Key="LOCSsvSortDirection">排序方向</sys:String>
+    <sys:String x:Key="LOCSsvFilterMedia">媒体筛选</sys:String>
+    <sys:String x:Key="LOCSsvFilterAll">全部</sys:String>
+    <sys:String x:Key="LOCSsvFilterImages">图片</sys:String>
+    <sys:String x:Key="LOCSsvFilterVideos">视频</sys:String>
+    <sys:String x:Key="LOCSsvFilterGameName">按游戏名称筛选</sys:String>
+    <sys:String x:Key="LOCSsvLibraryTotals">游戏库统计</sys:String>
+    <sys:String x:Key="LOCSsvThemeControlListOrderNote">列表排序偏好仅适用于使用此控件的主题，不影响插件的截图管理器及游戏截图视图。</sys:String>
+    <sys:String x:Key="LOCSsvColumnImages">图片</sys:String>
+    <sys:String x:Key="LOCSsvColumnVideos">视频</sys:String>
+    <sys:String x:Key="LOCSsvColumnSize">大小</sys:String>
+    <sys:String x:Key="LOCSsvClipboardCopyFailed">无法将图片复制到剪贴板。</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatCodecMagickHost">由 Playnite 解码（Magick.NET：WebP、AVIF、JPEG XL）。JPEG XL 需要 Playnite 10.63 或更高版本。</sys:String>
+    <sys:String x:Key="LOCSsvFolderOperationsSection">文件操作</sys:String>
+    <sys:String x:Key="LOCSsvFolderOperationsHint">选择此来源的截图是否参与移动到归档文件夹或图片格式转换。截图扫描和图库显示不受影响。</sys:String>
+    <sys:String x:Key="LOCSsvIncludeInArchive">参与归档／移动到文件夹</sys:String>
+    <sys:String x:Key="LOCSsvIncludeInConversion">参与图片转换</sys:String>
+    <sys:String x:Key="LOCSsvArchiveIncludeInConversion">归档文件夹参与图片转换</sys:String>
+    <sys:String x:Key="LOCSsvScreenshotsFolderMissingHint">找不到“{0}”的截图文件夹。请检查游戏路径配置，或刷新截图数据。</sys:String>
+    <sys:String x:Key="LOCSsvSourceListIncludedInArchive">参与归档／移动到文件夹</sys:String>
+    <sys:String x:Key="LOCSsvSourceListExcludedFromArchive">不参与归档／移动到文件夹</sys:String>
+    <sys:String x:Key="LOCSsvSourceListIncludedInConversion">参与图片转换</sys:String>
+    <sys:String x:Key="LOCSsvSourceListExcludedFromConversion">不参与图片转换</sys:String>
 </ResourceDictionary>

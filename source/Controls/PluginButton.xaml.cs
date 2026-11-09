@@ -1,4 +1,4 @@
-﻿using CommonPluginsShared;
+using CommonPluginsShared;
 using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
 using CommonPluginsShared.Interfaces;
@@ -68,7 +68,7 @@ namespace ScreenshotsVisualizer.Controls
             {
                 if (gameScreenshots.HasData)
                 {
-                    List<Screenshot> tmp = gameScreenshots.Items;
+                    List<Screenshot> tmp = new List<Screenshot>(gameScreenshots.Items);
                     tmp.Sort((x, y) => y.Modifed.CompareTo(x.Modifed));
                     DateTime SsvDateLast = tmp[0].Modifed;
 

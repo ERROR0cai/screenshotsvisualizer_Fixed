@@ -1,4 +1,4 @@
-﻿using CommonPluginsShared;
+using CommonPluginsShared;
 using CommonPluginsShared.Controls;
 using CommonPluginsShared.PlayniteExtended;
 using Playnite.SDK;
@@ -22,6 +22,11 @@ namespace ScreenshotsVisualizer
     public class ScreenshotsVisualizer : PluginExtended<ScreenshotsVisualizerSettingsViewModel, ScreenshotsVisualizerDatabase>, StartPage.SDK.IStartPageExtension
     {
         public override Guid Id => Guid.Parse("c6c8276f-91bf-48e5-a1d1-4bee0b493488");
+
+        private readonly object _refreshQueueLock = new object();
+        private readonly Dictionary<Guid, bool> _refreshQueue = new Dictionary<Guid, bool>();
+        private int _selectionRevision;
+        private volatile bool _stopping;
 
         internal TopPanelItem TopPanelItem { get; set; }
         internal SidebarItem SidebarItem { get; set; }
@@ -66,7 +71,7 @@ namespace ScreenshotsVisualizer
                 string buttonName = ((Button)sender).Name;
                 if (buttonName == "PART_CustomSsvButton")
                 {
-                    Common.LogDebug(true, "OnCustomThemeButtonClick()");
+                    Common.LogDebug("OnCustomThemeButtonClick()");
                     PluginDatabase.PluginWindows.ShowPluginGameDataWindow(PluginDatabase.GameContext);
                 }
             }
@@ -197,33 +202,26 @@ namespace ScreenshotsVisualizer
 
         public override void OnGameSelected(OnGameSelectedEventArgs args)
         {
-            try
+            int revision = System.Threading.Interlocked.Increment(ref _selectionRevision);
+            Game selected = args?.NewValue?.Count == 1 ? args.NewValue[0] : null;
+            if (selected == null || _stopping) return;
+
+            _ = Task.Run(async () =>
             {
-                if (args.NewValue?.Count == 1 && PluginDatabase.IsLoaded)
+                // Never wait forever if initialization failed or Playnite is closing.
+                for (int i = 0; i < 200 && !PluginDatabase.IsLoaded && !_stopping; i++)
+                    await Task.Delay(100).ConfigureAwait(false);
+
+                if (_stopping || !PluginDatabase.IsLoaded || revision != _selectionRevision) return;
+                var dispatcher = Application.Current?.Dispatcher;
+                if (dispatcher == null || dispatcher.HasShutdownStarted) return;
+                dispatcher.BeginInvoke((Action)(() =>
                 {
-                    PluginDatabase.GameContext = args.NewValue[0];
-                    PluginDatabase.SetThemesResources(PluginDatabase.GameContext);
-                }
-                else
-                {
-                    _ = Task.Run(() =>
-                    {
-                        _ = System.Threading.SpinWait.SpinUntil(() => PluginDatabase.IsLoaded, -1);
-                        _ = Application.Current.Dispatcher.BeginInvoke((Action)delegate
-                        {
-                            if (args.NewValue?.Count == 1)
-                            {
-                                PluginDatabase.GameContext = args.NewValue[0];
-                                PluginDatabase.SetThemesResources(PluginDatabase.GameContext);
-                            }
-                        });
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                Common.LogError(ex, false, true, PluginDatabase.PluginName);
-            }
+                    if (_stopping || revision != _selectionRevision) return;
+                    PluginDatabase.GameContext = selected;
+                    PluginDatabase.SetThemesResources(selected);
+                }));
+            });
         }
 
         // Add code to be executed when game is finished installing.
@@ -266,9 +264,11 @@ namespace ScreenshotsVisualizer
                         Common.LogError(ex, false, true, PluginDatabase.PluginName);
                     }
 
-                    if (args.Game.Id == PluginDatabase.GameContext.Id)
+                    if (args?.Game != null && PluginDatabase.GameContext?.Id == args.Game.Id)
                     {
-                        PluginDatabase.SetThemesResources(PluginDatabase.GameContext);
+                        var dispatcher = Application.Current?.Dispatcher;
+                        if (dispatcher != null && !dispatcher.HasShutdownStarted)
+                            dispatcher.BeginInvoke((Action)(() => PluginDatabase.SetThemesResources(args.Game)));
                     }
                 });
             }
@@ -307,11 +307,26 @@ namespace ScreenshotsVisualizer
                         pluginUserDataPath,
                         PluginDatabase.PluginName,
                         saveSettings)));
+
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    _ = System.Threading.SpinWait.SpinUntil(() => PluginDatabase.IsLoaded || _stopping, 10000);
+                    PluginDatabase.ScheduleLibraryThumbnailWarmup();
+                }
+                catch (Exception ex)
+                {
+                    Common.LogError(ex, false, true, PluginDatabase.PluginName);
+                }
+            });
         }
 
         // Add code to be executed when Playnite is shutting down.
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {
+            _stopping = true;
+            System.Threading.Interlocked.Increment(ref _selectionRevision);
         }
 
         #endregion
@@ -336,28 +351,55 @@ namespace ScreenshotsVisualizer
         /// </summary>
         public void RefreshGame(Game game)
         {
-            if (game == null) return;
-
-            try
+            if (game == null || _stopping) return;
+            lock (_refreshQueueLock)
             {
-                Common.LogDebug(true, $"Manual refresh requested for game: {game.Name}");
-
-                GameSettings gameSettings = PluginDatabase.GetGameSettings(game.Id);
-                if (gameSettings != null)
+                // One worker per game; further requests set a pending flag and are merged.
+                if (_refreshQueue.ContainsKey(game.Id))
                 {
-                    PluginDatabase.SetDataFromSettings(gameSettings);
-                    Common.LogDebug(true, $"Game data refreshed for: {game.Name}");
+                    _refreshQueue[game.Id] = true;
+                    return;
                 }
-
-                if (game.Id == PluginDatabase.GameContext.Id)
-                {
-                    PluginDatabase.SetThemesResources(PluginDatabase.GameContext);
-                }
+                _refreshQueue[game.Id] = false;
             }
-            catch (Exception ex)
+
+            _ = Task.Run(async () =>
             {
-                Common.LogError(ex, false, true, PluginDatabase.PluginName);
-            }
+                try
+                {
+                    // Combine bursts of notifications from multiple screenshot producers.
+                    await Task.Delay(250).ConfigureAwait(false);
+                    while (!_stopping)
+                    {
+                        lock (_refreshQueueLock) _refreshQueue[game.Id] = false;
+                        try
+                        {
+                            GameSettings gameSettings = PluginDatabase.GetGameSettings(game.Id);
+                            if (gameSettings != null)
+                                PluginDatabase.SetDataFromSettings(gameSettings);
+                        }
+                        catch (Exception ex)
+                        {
+                            Common.LogError(ex, false, true, PluginDatabase.PluginName);
+                        }
+                        lock (_refreshQueueLock)
+                        {
+                            if (!_refreshQueue[game.Id])
+                            {
+                                _refreshQueue.Remove(game.Id);
+                                return;
+                            }
+                        }
+                        await Task.Delay(250).ConfigureAwait(false);
+                    }
+                }
+                finally
+                {
+                    // A worker that already removed its entry must not remove a newer worker's entry.
+                    if (_stopping)
+                        lock (_refreshQueueLock) _refreshQueue.Remove(game.Id);
+                }
+            });
         }
 
         /// <summary>

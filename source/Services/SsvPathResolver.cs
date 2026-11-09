@@ -1,102 +1,168 @@
-using CommonPluginsStores;
+using CommonPlayniteShared.Common;
+using CommonPluginsShared.Extensions;
 using CommonPluginsShared.IO;
+using CommonPluginsStores;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using ScreenshotsVisualizer.Models;
-using System.Text;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ScreenshotsVisualizer.Services
 {
+    /// <summary>
+    /// Which sanitization variant produced a resolved screenshot folder path.
+    /// </summary>
+    public enum SsvPathResolveVariant
+    {
+        /// <summary>Playnite <see cref="Paths.GetSafePathName"/> (invalid → spaces).</summary>
+        Canonical = 0,
+
+        /// <summary>Invalid filename characters replaced with underscores.</summary>
+        Underscore = 1,
+
+        /// <summary>Invalid filename characters removed.</summary>
+        Strip = 2,
+
+        /// <summary>No existing directory matched any variant.</summary>
+        None = 3
+    }
+
+    /// <summary>
+    /// Result of resolving a configured screenshot folder for a game.
+    /// </summary>
+    public sealed class SsvPathResolution
+    {
+        /// <summary>Gets or sets the path to use (existing match, or canonical when missing).</summary>
+        public string Path { get; set; }
+
+        /// <summary>Gets or sets the canonical sanitized path (always <see cref="SsvPathResolveVariant.Canonical"/>).</summary>
+        public string CanonicalPath { get; set; }
+
+        /// <summary>Gets or sets which variant matched an existing directory.</summary>
+        public SsvPathResolveVariant Variant { get; set; }
+
+        /// <summary>Gets or sets whether <see cref="Path"/> exists on disk when <see cref="Variant"/> is not <see cref="SsvPathResolveVariant.None"/>.</summary>
+        public bool Exists { get; set; }
+    }
+
     /// <summary>
     /// Resolves folder paths and file patterns for screenshot sources.
     /// This service centralizes the same expansion logic used by scan and preview flows.
     /// </summary>
     public class SsvPathResolver
     {
-        private static readonly ILogger _logger = LogManager.GetLogger();
-
         /// <summary>
-        /// 清理文件名中的非法字符（与 GameSnap 保持一致）
-        /// 注意：保留空格，不压缩多个空格
+        /// Resolves the configured screenshot folder path for a game (canonical sanitize only).
+        /// Prefer <see cref="ResolveExistingPath"/> when looking up an on-disk folder.
         /// </summary>
-        private static string SanitizeFileName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                return "Unnamed";
-
-            var invalid = Path.GetInvalidFileNameChars();
-            var result = string.Concat(name.Split(invalid)).Trim();
-
-            return string.IsNullOrWhiteSpace(result) ? "Unnamed" : result;
-        }
-
-        /// <summary>
-        /// 自定义路径清理：只移除非法字符，不压缩空格
-        /// </summary>
-        private static string GetSafePathPreserveSpaces(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-                return path;
-
-            try
-            {
-                // 只做基本的路径规范化，不压缩空格
-                // 移除路径中的非法字符（但保留空格）
-                char[] invalidPathChars = Path.GetInvalidPathChars();
-                foreach (char c in invalidPathChars)
-                {
-                    path = path.Replace(c.ToString(), "");
-                }
-
-                // 获取完整路径（标准化斜杠等），但不会压缩空格
-                return Path.GetFullPath(path);
-            }
-            catch
-            {
-                // 如果路径无效，返回原样
-                return path;
-            }
-        }
-
-        /// <summary>
-        /// Resolves the configured screenshot folder path for a game.
-        /// </summary>
+        /// <param name="game">The game used for variable expansion.</param>
+        /// <param name="folderSettings">The source settings containing the configured path.</param>
+        /// <returns>The expanded and sanitized folder path.</returns>
         public string ResolvePath(Game game, FolderSettings folderSettings)
         {
-            if (game == null || folderSettings == null || string.IsNullOrEmpty(folderSettings.ScreenshotsFolder))
+            return ResolveCanonicalPath(game, folderSettings);
+        }
+
+        /// <summary>
+        /// Expands and sanitizes the folder with <see cref="Paths.GetSafePathName"/> (spaces).
+        /// Use this for create/move destinations.
+        /// </summary>
+        /// <param name="game">The game used for variable expansion.</param>
+        /// <param name="folderSettings">The source settings containing the configured path.</param>
+        /// <returns>The canonical sanitized path, or empty when inputs are missing.</returns>
+        public string ResolveCanonicalPath(Game game, FolderSettings folderSettings)
+        {
+            string expanded = ExpandFolderTemplate(game, folderSettings);
+            if (expanded.IsNullOrEmpty())
             {
                 return string.Empty;
             }
 
-            string originalPath = folderSettings.ScreenshotsFolder;
-            string originalGameName = game.Name;
-            string sanitizedGameName = SanitizeFileName(originalGameName);
+            return PathValidator.GetSafePath(expanded, false);
+        }
 
-            _logger.Debug($"[SsvPathResolver] ResolvePath START:");
-            _logger.Debug($"  ├─ Original game name: '{originalGameName}'");
-            _logger.Debug($"  ├─ Sanitized game name: '{sanitizedGameName}'");
-            _logger.Debug($"  ├─ Original folder pattern: '{originalPath}'");
+        /// <summary>
+        /// Resolves a folder that exists on disk: canonical (spaces), then underscore, then strip.
+        /// When none exist, <see cref="SsvPathResolution.Path"/> is the canonical path and <see cref="SsvPathResolution.Exists"/> is false.
+        /// </summary>
+        /// <param name="game">The game used for variable expansion.</param>
+        /// <param name="folderSettings">The source settings containing the configured path.</param>
+        /// <returns>Resolution details for scan, preview, and menu open-folder flows.</returns>
+        public SsvPathResolution ResolveExistingPath(Game game, FolderSettings folderSettings)
+        {
+            string expanded = ExpandFolderTemplate(game, folderSettings);
+            if (expanded.IsNullOrEmpty())
+            {
+                return new SsvPathResolution
+                {
+                    Path = string.Empty,
+                    CanonicalPath = string.Empty,
+                    Variant = SsvPathResolveVariant.None,
+                    Exists = false
+                };
+            }
 
-            // 先手动替换 {Name} 为清理后的名称
-            string pathAfterNameReplace = originalPath.Replace("{Name}", sanitizedGameName);
-            _logger.Debug($"  ├─ After {{Name}} replace: '{pathAfterNameReplace}'");
+            string canonical = PathValidator.GetSafePath(expanded, false);
+            if (!canonical.IsNullOrEmpty() && Directory.Exists(canonical))
+            {
+                return new SsvPathResolution
+                {
+                    Path = canonical,
+                    CanonicalPath = canonical,
+                    Variant = SsvPathResolveVariant.Canonical,
+                    Exists = true
+                };
+            }
 
-            // 然后让 PlayniteTools 展开其他变量
-            string expandedPath = PlayniteTools.StringExpandWithStores(game, pathAfterNameReplace);
-            _logger.Debug($"  ├─ After StringExpandWithStores: '{expandedPath}'");
+            string underscore = BuildSanitizedPath(expanded, SanitizeNameUnderscore);
+            if (!underscore.IsNullOrEmpty()
+                && !Paths.AreEqual(underscore, canonical)
+                && Directory.Exists(underscore))
+            {
+                return new SsvPathResolution
+                {
+                    Path = underscore,
+                    CanonicalPath = canonical,
+                    Variant = SsvPathResolveVariant.Underscore,
+                    Exists = true
+                };
+            }
 
-            // 使用自定义路径清理（保留空格，不压缩）
-            string safePath = GetSafePathPreserveSpaces(expandedPath);
-            _logger.Debug($"  └─ Final safe path: '{safePath}'");
+            string strip = BuildSanitizedPath(expanded, SanitizeNameStrip);
+            if (!strip.IsNullOrEmpty()
+                && !Paths.AreEqual(strip, canonical)
+                && !Paths.AreEqual(strip, underscore)
+                && Directory.Exists(strip))
+            {
+                return new SsvPathResolution
+                {
+                    Path = strip,
+                    CanonicalPath = canonical,
+                    Variant = SsvPathResolveVariant.Strip,
+                    Exists = true
+                };
+            }
 
-            return safePath;
+            return new SsvPathResolution
+            {
+                Path = canonical ?? string.Empty,
+                CanonicalPath = canonical ?? string.Empty,
+                Variant = SsvPathResolveVariant.None,
+                Exists = false
+            };
         }
 
         /// <summary>
         /// Builds the regex pattern used to match screenshot file names for a game.
         /// </summary>
+        /// <param name="game">The game used for variable expansion.</param>
+        /// <param name="folderSettings">The source settings containing the configured pattern.</param>
+        /// <returns>The anchored regex pattern string for a full file name match, or empty when pattern matching is disabled.</returns>
         public string ResolveFilePatternRegex(Game game, FolderSettings folderSettings)
         {
             if (game == null || folderSettings == null || !folderSettings.UsedFilePattern || string.IsNullOrEmpty(folderSettings.FilePattern))
@@ -104,50 +170,183 @@ namespace ScreenshotsVisualizer.Services
                 return string.Empty;
             }
 
-            string originalPattern = folderSettings.FilePattern;
-            string originalGameName = game.Name;
-            string sanitizedGameName = SanitizeFileName(originalGameName);
+            string gameName = API.Instance.ExpandGameVariables(game, "{Name}") ?? string.Empty;
+            string pattern = PlayniteTools.StringExpandWithStores(game, folderSettings.FilePattern);
+            pattern = EscapeRegexSpecialChars(pattern);
+            pattern = pattern.Replace("\\*", ".*");
+            pattern = pattern.Replace("\\{digit\\}", @"\d+");
+            pattern = pattern.Replace("\\{DateModified\\}", @"[0-9]{4}[-_][0-9]{2}[-_][0-9]{2}");
+            pattern = pattern.Replace("\\{DateTimeModified\\}", @"[0-9]{4}[-_][0-9]{2}[-_][0-9]{2}[ -_][0-9]{2}[-_][0-9]{2}[-_][0-9]{2}");
 
-            _logger.Debug($"[SsvPathResolver] ResolveFilePatternRegex START:");
-            _logger.Debug($"  ├─ Original game name: '{originalGameName}'");
-            _logger.Debug($"  ├─ Sanitized game name: '{sanitizedGameName}'");
-            _logger.Debug($"  ├─ Original file pattern: '{originalPattern}'");
+            if (!gameName.IsNullOrEmpty())
+            {
+                string escapedGameName = EscapeRegexSpecialChars(gameName);
+                string nameAlternation = BuildGameNameAlternation(gameName);
+                if (!escapedGameName.IsNullOrEmpty() && pattern.IndexOf(escapedGameName, StringComparison.Ordinal) >= 0)
+                {
+                    pattern = pattern.Replace(escapedGameName, nameAlternation);
+                }
+                else
+                {
+                    string escapedSafe = EscapeRegexSpecialChars(Paths.GetSafePathName(gameName));
+                    if (!escapedSafe.IsNullOrEmpty() && pattern.IndexOf(escapedSafe, StringComparison.Ordinal) >= 0)
+                    {
+                        pattern = pattern.Replace(escapedSafe, nameAlternation);
+                    }
+                }
+            }
 
-            // 先替换 {Name} 为清理后的名称
-            string patternAfterNameReplace = originalPattern.Replace("{Name}", sanitizedGameName);
-            _logger.Debug($"  ├─ After {{Name}} replace: '{patternAfterNameReplace}'");
+            return "^" + pattern + "$";
+        }
 
-            // 然后让 PlayniteTools 展开其他变量
-            string expandedPattern = PlayniteTools.StringExpandWithStores(game, patternAfterNameReplace);
-            _logger.Debug($"  ├─ After StringExpandWithStores: '{expandedPattern}'");
+        private static string ExpandFolderTemplate(Game game, FolderSettings folderSettings)
+        {
+            if (game == null || folderSettings == null || string.IsNullOrEmpty(folderSettings.ScreenshotsFolder))
+            {
+                return string.Empty;
+            }
 
-            string escapedPattern = EscapeRegexSpecialChars(expandedPattern);
-            _logger.Debug($"  ├─ After EscapeRegexSpecialChars: '{escapedPattern}'");
+            return PlayniteTools.StringExpandWithStores(game, folderSettings.ScreenshotsFolder);
+        }
 
-            string patternWithWildcards = escapedPattern
-                .Replace("\\*", ".*")
-                .Replace("\\{digit\\}", @"\d+")
-                .Replace("\\{DateModified\\}", @"[0-9]{4}[-_][0-9]{2}[-_][0-9]{2}")
-                .Replace("\\{DateTimeModified\\}", @"[0-9]{4}[-_][0-9]{2}[-_][0-9]{2}[ -_][0-9]{2}[-_][0-9]{2}[-_][0-9]{2}");
-            _logger.Debug($"  ├─ After wildcard replacements: '{patternWithWildcards}'");
+        private static string BuildGameNameAlternation(string gameName)
+        {
+            List<string> alternatives = new List<string>();
+            AddFlexibleNameAlternative(alternatives, Paths.GetSafePathName(gameName));
+            AddFlexibleNameAlternative(alternatives, SanitizeNameUnderscore(gameName));
+            AddFlexibleNameAlternative(alternatives, SanitizeNameStrip(gameName));
 
-            // 构建游戏名正则（空格允许任意数量，以匹配可能的压缩）
-            string gameNameForRegex = sanitizedGameName;
-            // 将每个空格替换为 [ ]*（匹配任意数量的空格）
-            string safeGameNamePattern = Regex.Escape(gameNameForRegex).Replace("\\ ", "[ ]*");
-            _logger.Debug($"  ├─ Game name regex: '{safeGameNamePattern}' (from '{gameNameForRegex}')");
+            if (alternatives.Count == 0)
+            {
+                return ToFlexibleNamePattern(gameName);
+            }
 
-            string finalPattern = patternWithWildcards.Replace(Regex.Escape(gameNameForRegex), safeGameNamePattern);
-            _logger.Debug($"  ├─ After game name regex replace: '{finalPattern}'");
+            if (alternatives.Count == 1)
+            {
+                return alternatives[0];
+            }
 
-            string anchoredPattern = "^" + finalPattern + "$";
-            _logger.Debug($"  └─ Final anchored regex: '{anchoredPattern}'");
+            return "(?:" + string.Join("|", alternatives) + ")";
+        }
 
-            return anchoredPattern;
+        private static void AddFlexibleNameAlternative(List<string> alternatives, string name)
+        {
+            if (name.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            string flexible = ToFlexibleNamePattern(name);
+            if (flexible.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            if (!alternatives.Any(x => string.Equals(x, flexible, StringComparison.Ordinal)))
+            {
+                alternatives.Add(flexible);
+            }
+        }
+
+        private static string ToFlexibleNamePattern(string name)
+        {
+            return EscapeRegexSpecialChars(name).Replace(" ", "[ ]*");
+        }
+
+        private static string BuildSanitizedPath(string path, Func<string, string> sanitizeName)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return path;
+            }
+
+            path = Paths.FixSeparators(path);
+            List<string> pathFolders = path.Split('\\').ToList();
+            string pathReturn = string.Empty;
+
+            for (int i = 0; i < pathFolders.Count; i++)
+            {
+                string folder = pathFolders[i];
+
+                if (pathReturn.IsNullOrEmpty())
+                {
+                    pathReturn += folder;
+                }
+                else
+                {
+                    pathReturn += "\\" + sanitizeName(folder);
+                }
+            }
+
+            return pathReturn;
+        }
+
+        /// <summary>
+        /// Replaces invalid filename characters with underscores, collapses spaces and repeated underscores.
+        /// </summary>
+        /// <param name="filename">Raw file or folder name segment.</param>
+        /// <returns>Sanitized segment.</returns>
+        internal static string SanitizeNameUnderscore(string filename)
+        {
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                return filename;
+            }
+
+            char[] invalid = Path.GetInvalidFileNameChars();
+            char[] buffer = new char[filename.Length];
+            int len = 0;
+            for (int i = 0; i < filename.Length; i++)
+            {
+                char c = filename[i];
+                if (Array.IndexOf(invalid, c) >= 0)
+                {
+                    c = '_';
+                }
+
+                buffer[len++] = c;
+            }
+
+            string result = new string(buffer, 0, len);
+            result = Regex.Replace(result, @"\s+", " ").Trim();
+            result = Regex.Replace(result, "_{2,}", "_");
+            return result;
+        }
+
+        /// <summary>
+        /// Removes invalid filename characters, then collapses whitespace.
+        /// </summary>
+        /// <param name="filename">Raw file or folder name segment.</param>
+        /// <returns>Sanitized segment.</returns>
+        internal static string SanitizeNameStrip(string filename)
+        {
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                return filename;
+            }
+
+            char[] invalid = Path.GetInvalidFileNameChars();
+            char[] buffer = new char[filename.Length];
+            int len = 0;
+            for (int i = 0; i < filename.Length; i++)
+            {
+                char c = filename[i];
+                if (Array.IndexOf(invalid, c) < 0)
+                {
+                    buffer[len++] = c;
+                }
+            }
+
+            return Regex.Replace(new string(buffer, 0, len), @"\s+", " ").Trim();
         }
 
         private static string EscapeRegexSpecialChars(string input)
         {
+            if (input == null)
+            {
+                return string.Empty;
+            }
+
             string specialChars = @".^$*+?(){}[]|\";
             StringBuilder escapedString = new StringBuilder();
 

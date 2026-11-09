@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <sys:String x:Key="LOCSsvScreenshot">{0} screenshot</sys:String>
@@ -273,4 +273,36 @@ Archive destination:
     <sys:String x:Key="LOCSsvConfigResolvedPathExists">Resolved folder exists.</sys:String>
     <sys:String x:Key="LOCSsvConfigResolvedPathMissing">Resolved folder does not exist.</sys:String>
     
+
+    <!-- Added localization keys for ScreenshotsVisualizer 3.6.0 -->
+    <sys:String x:Key="LOCSsvSortBy">Sort by</sys:String>
+    <sys:String x:Key="LOCSsvSortByDate">Date</sys:String>
+    <sys:String x:Key="LOCSsvSortByName">Name</sys:String>
+    <sys:String x:Key="LOCSsvSortBySize">Size</sys:String>
+    <sys:String x:Key="LOCSsvSortByType">Type</sys:String>
+    <sys:String x:Key="LOCSsvSortAscending">Ascending</sys:String>
+    <sys:String x:Key="LOCSsvSortDescending">Descending</sys:String>
+    <sys:String x:Key="LOCSsvSortDirection">Sort direction</sys:String>
+    <sys:String x:Key="LOCSsvFilterMedia">Filter</sys:String>
+    <sys:String x:Key="LOCSsvFilterAll">All</sys:String>
+    <sys:String x:Key="LOCSsvFilterImages">Images</sys:String>
+    <sys:String x:Key="LOCSsvFilterVideos">Videos</sys:String>
+    <sys:String x:Key="LOCSsvFilterGameName">Filter games by name</sys:String>
+    <sys:String x:Key="LOCSsvLibraryTotals">Library totals</sys:String>
+    <sys:String x:Key="LOCSsvThemeControlListOrderNote">List order preferences apply when a theme hosts this control. They are not used by the plugin Manager or game screenshot views.</sys:String>
+    <sys:String x:Key="LOCSsvColumnImages">Images</sys:String>
+    <sys:String x:Key="LOCSsvColumnVideos">Videos</sys:String>
+    <sys:String x:Key="LOCSsvColumnSize">Size</sys:String>
+    <sys:String x:Key="LOCSsvClipboardCopyFailed">Could not copy the image to the clipboard.</sys:String>
+    <sys:String x:Key="LOCSsvMediaFormatCodecMagickHost">Decoded by Playnite (Magick.NET: WebP, AVIF, JPEG XL). JPEG XL requires Playnite 10.63 or newer.</sys:String>
+    <sys:String x:Key="LOCSsvFolderOperationsSection">Operations</sys:String>
+    <sys:String x:Key="LOCSsvFolderOperationsHint">Choose whether screenshots from this source are included when moving to the archive folder or converting images. Scanning and gallery are unchanged.</sys:String>
+    <sys:String x:Key="LOCSsvIncludeInArchive">Include in archive / move to folder</sys:String>
+    <sys:String x:Key="LOCSsvIncludeInConversion">Include in image conversion</sys:String>
+    <sys:String x:Key="LOCSsvArchiveIncludeInConversion">Include archive folder in image conversion</sys:String>
+    <sys:String x:Key="LOCSsvScreenshotsFolderMissingHint">Screenshot folder not found for "{0}". Check the game path configuration or refresh screenshot data.</sys:String>
+    <sys:String x:Key="LOCSsvSourceListIncludedInArchive">Included in archive / move to folder</sys:String>
+    <sys:String x:Key="LOCSsvSourceListExcludedFromArchive">Excluded from archive / move to folder</sys:String>
+    <sys:String x:Key="LOCSsvSourceListIncludedInConversion">Included in image conversion</sys:String>
+    <sys:String x:Key="LOCSsvSourceListExcludedFromConversion">Excluded from image conversion</sys:String>
 </ResourceDictionary>
